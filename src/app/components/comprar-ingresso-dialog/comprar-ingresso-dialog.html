@@ -1,0 +1,82 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h2>Comprar Ingresso</h2>
+    <p>Complete os dados para finalizar sua compra</p>
+    <button mat-icon-button (click)="cancelar()" class="close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="event-info">
+    <div class="event-image">
+      <img [src]="evento.imagemUrl || 'assets/imgs/evento-padrao.jpeg'" alt="{{evento.nome}}">
+    </div>
+    <div class="event-details">
+      <h3>{{evento.nome}}</h3>
+      <div class="detail">
+        <mat-icon>place</mat-icon>
+        <span>{{evento.local}}</span>
+      </div>
+      <div class="detail">
+        <mat-icon>calendar_today</mat-icon>
+        <span>{{evento.dataEvento | date:'dd/MM/yyyy'}}</span>
+      </div>
+      <div class="detail">
+        <mat-icon>schedule</mat-icon>
+        <span>{{evento.dataEvento | date:'HH:mm'}}</span>
+      </div>
+      <div class="price">
+        {{evento.precoIngresso | currency:'BRL':'symbol':'1.2-2'}} <span>por ingresso</span>
+      </div>
+    </div>
+  </div>
+
+  <form [formGroup]="compraForm" class="purchase-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Nome Completo</mat-label>
+      <input matInput formControlName="nomeComprador" required>
+      <mat-error>Nome é obrigatório</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="emailComprador" required>
+      <mat-error>Email inválido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Telefone</mat-label>
+      <input matInput formControlName="telefoneComprador" required>
+      <mat-error>Telefone inválido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Quantidade</mat-label>
+      <mat-select formControlName="quantidade" (selectionChange)="calcularTotal()">
+        <mat-option *ngFor="let qty of quantidades" [value]="qty">
+          {{qty}} {{qty === 1 ? 'ingresso' : 'ingressos'}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <div class="total-section">
+    <div class="total-row">
+      <span>{{compraForm.value.quantidade || 1}} × {{evento.precoIngresso | currency:'BRL':'symbol':'1.2-2'}}</span>
+      <span>{{valorTotal | currency:'BRL':'symbol':'1.2-2'}}</span>
+    </div>
+    <div class="total-row final">
+      <span>Total</span>
+      <span>{{valorTotal | currency:'BRL':'symbol':'1.2-2'}}</span>
+    </div>
+  </div>
+
+  <div class="dialog-actions">
+    <button mat-stroked-button (click)="cancelar()">Cancelar</button>
+    <button mat-raised-button color="primary" 
+            (click)="confirmarCompra()"
+            [disabled]="compraForm.invalid || comprando">
+      {{comprando ? 'Processando...' : 'Confirmar Compra'}}
+    </button>
+  </div>
+</div>

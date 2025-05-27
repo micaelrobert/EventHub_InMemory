@@ -1,0 +1,127 @@
+.dialog-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.dialog-header {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.dialog-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.dialog-header p {
+  margin: 5px 0 0;
+  color: #666;
+}
+
+.close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.event-info {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.event-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.event-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-details {
+  flex: 1;
+}
+
+.event-details h3 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.detail mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+  color: #666;
+}
+
+.price {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.price span {
+  font-weight: normal;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.purchase-form {
+  display: grid;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.total-section {
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+  margin-bottom: 20px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.total-row.final {
+  font-weight: bold;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .event-info {
+    flex-direction: column;
+  }
+  
+  .event-image {
+    width: 100%;
+    height: 180px;
+  }
+}

@@ -1,0 +1,42 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 64px); /* 64px é a altura comum de um toolbar */
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.login-button {
+  margin-top: 1rem;
+  min-height: 48px; /* Para acomodar o spinner */
+}
+
+.extra-actions {
+  margin-top: 1rem;
+  padding-bottom: 1rem; /* Para dar espaço antes do fim do card */
+}
+
+.extra-actions a {
+  text-decoration: none;
+  color: var(--mat-primary-text-button-color, #1976d2); /* Cor primária ou padrão de link */
+}
+
+.extra-actions a:hover {
+  text-decoration: underline;
+}
+
+/* Para o spinner dentro do botão */
+.login-button mat-progress-spinner {
+  display: inline-block;
+  vertical-align: middle;
+}

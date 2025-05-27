@@ -1,14 +1,14 @@
 import { mergeApplicationConfig, ApplicationConfig } from '@angular/core';
 import { provideServerRendering } from '@angular/platform-server';
-import { provideServerRouting } from '@angular/ssr';
 import { appConfig } from './app.config';
-import { serverRoutes } from './app.routes.server';
 
+// 1. Define a configuração específica do servidor.
 const serverConfig: ApplicationConfig = {
   providers: [
-    provideServerRendering(),
-    provideServerRouting(serverRoutes)
+    provideServerRendering()
   ]
 };
 
+// 2. Junta a configuração principal do app (appConfig) com a do servidor (serverConfig)
+// e exporta a variável 'config' que outros arquivos (como o main.server.ts) utilizam.
 export const config = mergeApplicationConfig(appConfig, serverConfig);

@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="hero-section">
+    <div class="hero-image-banner">
+      <div class="hero-text-block">
+        <h1>PRINCIPAIS EVENTOS DO ANO</h1>
+        <div class="hero-buttons">
+          <button aria-label="Comprar ingresso"routerLink="/eventos" routerLinkActive="active" >COMPRAR INGRESSOS</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-section">
+    <div class="titulo-com-impacto">
+      <span class="titulo-icone" aria-hidden="true">🎉</span> EventHub
+    </div>
+    <div class="subtitulo">Encontre suas atrações favoritas</div>
+
+    <div class="action-cards">
+      <mat-card class="action-card" routerLink="/eventos" *ngIf="!authService.isAdmin()">
+        <mat-card-content>
+          <mat-icon>event_available</mat-icon>
+          <h3>Ver Eventos</h3>
+          <p>Explore todos os eventos disponíveis</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="action-card" routerLink="/eventos" *ngIf="authService.isLoggedIn() && authService.isAdmin()">
+        <mat-card-content>
+          <mat-icon>settings_applications</mat-icon>
+          <h3>Gerenciar Eventos</h3>
+          <p>Edite, delete e gerencie os eventos</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="action-card" routerLink="/novo-evento" *ngIf="authService.isLoggedIn() && authService.isAdmin()">
+        <mat-card-content>
+          <mat-icon>add_circle</mat-icon>
+          <h3>Criar Evento</h3>
+          <p>Cadastre um novo evento no sistema</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="action-card" routerLink="/meus-ingressos" *ngIf="authService.isLoggedIn() && authService.isComum()">
+        <mat-card-content>
+          <mat-icon>receipt_long</mat-icon>
+          <h3>Meus Ingressos</h3>
+          <p>Consulte seus ingressos adquiridos</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,205 @@
+
+.container {
+  padding: 0;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+.hero-section {
+  color: white;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  animation: fadeInUp 0.8s ease-in-out forwards;
+}
+
+.hero-image-banner {
+  background-image: url('assets\slogan.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 450px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 2rem;
+  animation: zoomIn 1s ease-in-out forwards;
+  position: relative;
+}
+
+.hero-text-block {
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  animation: fadeInUp 1.2s ease-out;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.hero-text-block h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.hero-text-block button {
+  background-color: rgb(220, 185, 240);
+  color: black;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.hero-text-block button:hover {
+  background-color: #e0e0e0;
+}
+
+.action-section {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.titulo-com-impacto {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff, #448aff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+  animation: fadeInDown 0.7s ease-out;
+}
+
+.subtitulo {
+  font-size: 1.4rem;
+  color: #444;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.action-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.action-card {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 1rem;
+  animation: fadeInUp 0.6s ease forwards;
+  background-color: #ffffff;
+}
+
+.action-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(123, 31, 162, 0.15);
+}
+
+.action-card mat-card-content {
+  text-align: center;
+  padding: 2rem;
+}
+
+.action-card mat-icon {
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  color: #512da8;
+  margin-bottom: 1rem;
+}
+
+.action-card h3 {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.action-card p {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(1.05);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .titulo-com-impacto {
+    font-size: 2rem;
+  }
+
+  .subtitulo {
+    font-size: 1.2rem;
+  }
+
+  .hero-text-block h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .action-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.action-card {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 1rem;
+  animation: fadeinDown 0.6s ease forwards;
+  background: white;
+
+}

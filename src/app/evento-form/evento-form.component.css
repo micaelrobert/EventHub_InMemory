@@ -1,0 +1,50 @@
+.full-width {
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px; /* Espaço entre os campos */
+}
+
+.form-row mat-form-field {
+  flex: 1; /* Faz com que os campos dividam o espaço igualmente */
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end; /* Alinha os botões à direita */
+  gap: 8px;
+  padding-right: 0;
+}
+/* Em evento-form.component.css */
+.toggle-section {
+  margin-bottom: 16px; 
+  margin-top: 8px;
+}
+/* Em evento-form.component.css */
+.full-width {
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px; /* Espaço entre os campos */
+  align-items: flex-start; /* Alinha os campos na base se tiverem alturas diferentes por causa de mat-error */
+}
+
+.form-row .form-field-half {
+  flex: 1; /* Faz com que os campos na mesma linha dividam o espaço igualmente */
+}
+
+.toggle-section {
+  margin-top: 8px;    /* Adiciona um pouco de espaço acima do toggle */
+  margin-bottom: 16px; /* Adiciona um pouco de espaço abaixo do toggle */
+}
+
+mat-card-actions button {
+  margin-left: 8px; /* Adiciona um pequeno espaço entre os botões de ação */
+}
+mat-card-actions button:first-child {
+  margin-left: 0; /* Remove a margem do primeiro botão para alinhar bem à direita */
+}

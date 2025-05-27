@@ -1,0 +1,51 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>event</mat-icon>
+      Eventos Disponíveis
+    </mat-card-title>
+    <mat-card-subtitle>Explore os eventos e clique para ver os detalhes</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="event-card-grid">
+      <mat-card class="event-card" *ngFor="let evento of eventos" matRipple>
+        <img
+          mat-card-image
+          [src]="getImagemEvento(evento)"
+          (error)="handleImageError($event)"
+          alt="Imagem do Evento"
+          class="event-image"
+        />
+
+        <mat-card-content>
+          <h3 class="event-name">{{ evento.nome }}</h3>
+          <p class="event-location">{{ evento.local }}</p>
+          <p class="event-date">{{ evento.dataEvento | date:'dd/MM/yyyy HH:mm' }}</p>
+        </mat-card-content>
+
+        <mat-card-actions align="end" class="action-buttons">
+          <a mat-icon-button color="primary" [routerLink]="['/eventos', evento.id]" matTooltip="Ver detalhes">
+            <mat-icon>visibility</mat-icon>
+          </a>
+          <a mat-icon-button color="accent" *ngIf="authService.isAdmin()" [routerLink]="['/eventos/editar', evento.id]" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </a>
+          <button mat-icon-button color="warn" *ngIf="authService.isAdmin()" (click)="deletar(evento)" matTooltip="Deletar">
+            <mat-icon>delete</mat-icon>
+          </button>
+       <!----  <button
+            mat-icon-button
+            color="primary"
+            *ngIf="!authService.isAdmin()"
+            [disabled]="!evento.ativo || evento.ingressosDisponiveis === 0"
+            (click)="comprarIngresso(evento)"
+            matTooltip="Comprar"
+          >
+            <mat-icon>shopping_cart</mat-icon>
+          </button>-->
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </mat-card-content>
+</mat-card>
