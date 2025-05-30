@@ -1,82 +1,106 @@
-<div class="dialog-container">
-  <div class="dialog-header">
-    <h2>Comprar Ingresso</h2>
-    <p>Complete os dados para finalizar sua compra</p>
-    <button mat-icon-button (click)="cancelar()" class="close-btn">
-      <mat-icon>close</mat-icon>
+<div class="purchase-page-wrapper">
+  <div *ngIf="!eventoCarregado" class="loading-state">
+    <mat-spinner *ngIf="!evento" diameter="50"></mat-spinner>
+    <p *ngIf="!evento">Carregando detalhes do evento...</p>
+    </div>
+
+  <div *ngIf="eventoCarregado" class="purchase-page-container">
+    <button mat-flat-button color="primary" (click)="voltarParaEventos()" class="back-button">
+      <mat-icon>arrow_back</mat-icon> Voltar para Eventos
     </button>
-  </div>
 
-  <div class="event-info">
-    <div class="event-image">
-      <img [src]="evento.imagemUrl || 'assets/imgs/evento-padrao.jpeg'" alt="{{evento.nome}}">
-    </div>
-    <div class="event-details">
-      <h3>{{evento.nome}}</h3>
-      <div class="detail">
-        <mat-icon>place</mat-icon>
-        <span>{{evento.local}}</span>
-      </div>
-      <div class="detail">
-        <mat-icon>calendar_today</mat-icon>
-        <span>{{evento.dataEvento | date:'dd/MM/yyyy'}}</span>
-      </div>
-      <div class="detail">
-        <mat-icon>schedule</mat-icon>
-        <span>{{evento.dataEvento | date:'HH:mm'}}</span>
-      </div>
-      <div class="price">
-        {{evento.precoIngresso | currency:'BRL':'symbol':'1.2-2'}} <span>por ingresso</span>
-      </div>
-    </div>
-  </div>
+    <mat-card class="modern-purchase-card">
+      <mat-card-header class="card-header">
+        <mat-card-title>Comprar Ingresso</mat-card-title>
+        <mat-card-subtitle>Complete os dados para finalizar sua compra para o evento:</mat-card-subtitle>
+      </mat-card-header>
 
-  <form [formGroup]="compraForm" class="purchase-form">
-    <mat-form-field appearance="outline">
-      <mat-label>Nome Completo</mat-label>
-      <input matInput formControlName="nomeComprador" required>
-      <mat-error>Nome é obrigatório</mat-error>
-    </mat-form-field>
+      <mat-card-content class="card-content-wrapper">
+        <div class="event-display-area">
+          <div class="event-image-container">
+            <img [src]="evento.imagemUrl || 'assets/imgs/evento-padrao.jpeg'"
+                             (error)="onImageError($event)"
+                             alt="{{evento.nome}}" class="event-cover-image" />
+          </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Email</mat-label>
-      <input matInput type="email" formControlName="emailComprador" required>
-      <mat-error>Email inválido</mat-error>
-    </mat-form-field>
+          <div class="event-details-summary">
+            <h3 class="event-title">{{evento.nome}}</h3>
+            <div class="detail-line">
+              <mat-icon>place</mat-icon>
+              <span>{{evento.local}}</span>
+            </div>
+            <div class="detail-line">
+              <mat-icon>calendar_today</mat-icon>
+              <span>{{evento.dataEvento | date:'dd/MM/yyyy'}}</span>
+            </div>
+            <div class="detail-line">
+              <mat-icon>schedule</mat-icon>
+              <span>{{evento.dataEvento | date:'HH:mm'}}</span>
+            </div>
+            <div class="ticket-price">
+              {{evento.precoIngresso | currency:'BRL':'symbol':'1.2-2'}} <span>por ingresso</span>
+            </div>
+            <p class="tickets-available" *ngIf="evento.ingressosDisponiveis !== null">
+              <mat-icon>confirmation_number</mat-icon>
+              {{evento.ingressosDisponiveis}} ingressos disponíveis
+            </p>
+          </div>
+        </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Telefone</mat-label>
-      <input matInput formControlName="telefoneComprador" required>
-      <mat-error>Telefone inválido</mat-error>
-    </mat-form-field>
+        <mat-divider></mat-divider> <form [formGroup]="compraForm" class="purchase-form-layout">
+          <mat-form-field appearance="outline">
+            <mat-label>Nome Completo</mat-label>
+            <input matInput formControlName="nomeComprador" required />
+            <mat-error *ngIf="compraForm.get('nomeComprador')?.hasError('required')">Campo obrigatório</mat-error>
+            <mat-error *ngIf="compraForm.get('nomeComprador')?.hasError('minlength')">Mínimo 3 caracteres</mat-error>
+          </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Quantidade</mat-label>
-      <mat-select formControlName="quantidade" (selectionChange)="calcularTotal()">
-        <mat-option *ngFor="let qty of quantidades" [value]="qty">
-          {{qty}} {{qty === 1 ? 'ingresso' : 'ingressos'}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </form>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="emailComprador" required />
+            <mat-error *ngIf="compraForm.get('emailComprador')?.hasError('required')">Email é obrigatório</mat-error>
+            <mat-error *ngIf="compraForm.get('emailComprador')?.hasError('email')">Email inválido</mat-error>
+          </mat-form-field>
 
-  <div class="total-section">
-    <div class="total-row">
-      <span>{{compraForm.value.quantidade || 1}} × {{evento.precoIngresso | currency:'BRL':'symbol':'1.2-2'}}</span>
-      <span>{{valorTotal | currency:'BRL':'symbol':'1.2-2'}}</span>
-    </div>
-    <div class="total-row final">
-      <span>Total</span>
-      <span>{{valorTotal | currency:'BRL':'symbol':'1.2-2'}}</span>
-    </div>
-  </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Telefone</mat-label>
+            <input matInput formControlName="telefoneComprador" (input)="formatarTelefone($event)" maxlength="15" required />
+            <mat-error *ngIf="compraForm.get('telefoneComprador')?.hasError('required')">Telefone é obrigatório</mat-error>
+            <mat-error *ngIf="compraForm.get('telefoneComprador')?.hasError('pattern')">Formato: (99) 99999-9999</mat-error>
+          </mat-form-field>
 
-  <div class="dialog-actions">
-    <button mat-stroked-button (click)="cancelar()">Cancelar</button>
-    <button mat-raised-button color="primary" 
-            (click)="confirmarCompra()"
-            [disabled]="compraForm.invalid || comprando">
-      {{comprando ? 'Processando...' : 'Confirmar Compra'}}
-    </button>
+          <mat-form-field appearance="outline">
+            <mat-label>Quantidade</mat-label>
+            <mat-select formControlName="quantidade" (selectionChange)="calcularTotal()">
+              <mat-option *ngFor="let qty of quantidades" [value]="qty">
+                {{qty}} {{qty === 1 ? 'ingresso' : 'ingressos'}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="compraForm.get('quantidade')?.hasError('required')">Quantidade é obrigatória</mat-error>
+            <mat-error *ngIf="compraForm.get('quantidade')?.hasError('min')">Selecione ao menos 1 ingresso</mat-error>
+          </mat-form-field>
+        </form>
+
+        <div class="total-summary-section">
+          <div class="total-line-item">
+            <span>{{compraForm.value.quantidade || 1}} × {{evento.precoIngresso | currency:'BRL':'symbol':'1.2-2'}}</span>
+            <span>{{valorTotal | currency:'BRL':'symbol':'1.2-2'}}</span>
+          </div>
+          <div class="total-line-item final-total">
+            <span>Total</span>
+            <span>{{valorTotal | currency:'BRL':'symbol':'1.2-2'}}</span>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions class="card-actions-row">
+        <button mat-stroked-button color="warn" (click)="voltarParaEventos()">Cancelar</button>
+        <button mat-raised-button color="primary"
+                [disabled]="compraForm.invalid || comprando || !eventoCarregado || evento.ingressosDisponiveis === 0"
+                (click)="confirmarCompra()">
+          {{comprando ? 'Processando...' : 'Confirmar Compra'}}
+        </button>
+      </mat-card-actions>
+    </mat-card>
   </div>
 </div>

@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Solicitar Reembolso</h2>
+
+<mat-dialog-content class="refund-dialog-content">
+  <p>Você está solicitando o reembolso para o ingresso do evento:</p>
+  <h3 class="event-title">{{ ingresso.evento?.nome || 'Evento Desconhecido' }}</h3>
+  <p>Titular: <strong>{{ ingresso.nomeComprador }}</strong></p>
+  
+
+  <form [formGroup]="reembolsoForm" class="refund-form">
+    <mat-form-field appearance="outline" class="full-width-field">
+      <mat-label>Motivo do Reembolso</mat-label>
+      <textarea matInput formControlName="motivo" rows="4" placeholder="Descreva brevemente o motivo da sua solicitação." required></textarea>
+      <mat-error *ngIf="reembolsoForm.get('motivo')?.hasError('required')">O motivo é obrigatório.</mat-error>
+      <mat-error *ngIf="reembolsoForm.get('motivo')?.hasError('minlength')">Mínimo de 10 caracteres.</mat-error>
+      <mat-error *ngIf="reembolsoForm.get('motivo')?.hasError('maxlength')">Máximo de 500 caracteres.</mat-error>
+    </mat-form-field>
+  </form> 
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="refund-dialog-actions">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" [disabled]="reembolsoForm.invalid" (click)="onConfirm()">Solicitar Reembolso</button>
+</mat-dialog-actions>

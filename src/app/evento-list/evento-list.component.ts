@@ -1,3 +1,5 @@
+// src/app/evento-list/evento-list.component.ts (AJUSTADO)
+
 import { Component, inject, OnInit } from "@angular/core";
 import { CommonModule, DatePipe } from "@angular/common";
 import { MatTableModule } from "@angular/material/table";
@@ -5,8 +7,10 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatCardModule } from "@angular/material/card";
 import { MatChipsModule } from "@angular/material/chips";
-import { RouterModule } from "@angular/router";
+import { RouterModule, Router } from "@angular/router"; // Importar Router aqui
 import { MatTooltipModule } from '@angular/material/tooltip';
+// import { MatDialog, MatDialogModule } from '@angular/material/dialog'; // REMOVIDO: Não precisamos mais do MatDialog aqui
+// import { ComprarIngressoDialogComponent } from '../components/comprar-ingresso-dialog/comprar-ingresso-dialog.component'; // REMOVIDO: Não precisamos mais do ComprarIngressoDialogComponent
 
 import { EventosService } from "../services/eventos.service";
 import type { Evento } from "../models/evento.model";
@@ -26,13 +30,16 @@ import { NotificationService } from '../services/notification.service';
     MatCardModule,
     MatChipsModule,
     MatTooltipModule,
-    DatePipe
+    DatePipe,
+    // MatDialogModule, // REMOVIDO: Não precisamos mais do MatDialogModule
   ],
   templateUrl: "./evento-list.component.html",
   styleUrls: ["./evento-list.component.css"],
 })
 export class EventoListComponent implements OnInit {
   private eventosService = inject(EventosService);
+  // private dialog = inject(MatDialog); // REMOVIDO: Não precisamos mais do MatDialog aqui
+  private router = inject(Router); // ADICIONADO: Injetar Router para navegação
   public authService = inject(AuthService);
   private notificationService = inject(NotificationService);
 
@@ -43,8 +50,8 @@ export class EventoListComponent implements OnInit {
   }
 
   carregarEventos(): void {
-    const loadObservable = this.authService.isAdmin() 
-      ? this.eventosService.getEventos() 
+    const loadObservable = this.authService.isAdmin()
+      ? this.eventosService.getEventos()
       : this.eventosService.getEventosDisponiveis();
 
     loadObservable.subscribe({
@@ -63,11 +70,9 @@ export class EventoListComponent implements OnInit {
   }
 
   getImagemEvento(evento: Evento): string {
-    // Verifica se tem URL válida
     if (evento.imagemUrl && evento.imagemUrl.trim() !== '') {
       return evento.imagemUrl;
     }
-    // Fallback para imagem padrão
     return 'assets/imgs/evento-padrao.jpeg';
   }
 
@@ -107,8 +112,9 @@ export class EventoListComponent implements OnInit {
     }
   }
 
+  // MÉTODO COMPRAR INGRESSO ATUALIZADO PARA NAVEGAR PARA A NOVA PAGE
   comprarIngresso(evento: Evento): void {
-    this.notificationService.info(`Redirecionando para compra: ${evento.nome}`);
-    // Implementação da compra pode ser adicionada aqui
+    // Navega para a nova rota de compra, passando o ID do evento
+    this.router.navigate(['/comprar', evento.id]);
   }
 }

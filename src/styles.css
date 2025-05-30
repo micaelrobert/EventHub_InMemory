@@ -211,8 +211,8 @@ body {
 /* Modern Dialog Styles */
 .modern-dialog .mat-mdc-dialog-container {
   border-radius: 24px !important;
-  padding: 0 !important;
-  overflow: hidden !important;
+  /* padding: 0 !important; */ /* <--- REMOVIDO OU COMENTADO */
+  /* overflow: hidden !important; */ /* <--- REMOVIDO OU COMENTADO */
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
 }
 

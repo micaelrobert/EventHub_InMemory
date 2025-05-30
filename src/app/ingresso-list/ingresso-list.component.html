@@ -9,13 +9,13 @@
       <div class="filtros">
         <mat-form-field appearance="outline">
           <mat-label>Buscar por código</mat-label>
-          <input matInput [(ngModel)]="filtroCodigo" (input)="aplicarFiltros()" placeholder="Digite o código">
+          <input matInput [(ngModel)]="filtroCodigo" (input)="aplicarFiltro()" placeholder="Digite o código">
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Status</mat-label>
-          <mat-select [(ngModel)]="filtroStatus" (selectionChange)="aplicarFiltros()">
+          <mat-select [(ngModel)]="filtroStatus" (selectionChange)="aplicarFiltro()">
             <mat-option value="">Todos</mat-option>
             <mat-option value="Ativo">Ativo</mat-option>
             <mat-option value="Cancelado">Cancelado</mat-option>
@@ -79,7 +79,7 @@
           <ng-container matColumnDef="acoes">
             <th mat-header-cell *matHeaderCellDef>Ações</th>
             <td mat-cell *matCellDef="let ingresso">
-              <button mat-icon-button color="primary" (click)="validarIngresso(ingresso)">
+              <button mat-icon-button color="primary" (click)="baixarIngresso(ingresso)">
                 <mat-icon>qr_code_scanner</mat-icon>
               </button>
             </td>

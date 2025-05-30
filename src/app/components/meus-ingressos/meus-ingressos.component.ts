@@ -1,5 +1,7 @@
+// src/app/components/meus-ingressos/meus-ingressos.component.ts (AJUSTADO PARA INJEÇÃO VIA CONSTRUTOR)
+
 import { Component, OnInit, inject } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DatePipe } from "@angular/common";
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 // Angular Material
@@ -9,14 +11,15 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { MatChipsModule } from '@angular/material/chips';
 // Serviços e modelos
 import { IngressosService } from "../../services/ingressos.service";
 import { NotificationService } from "../../services/notification.service";
-import { AuthService } from "../../services/auth.service";
-import { MatDialog } from "@angular/material/dialog";
-import { StatusIngresso, Ingresso } from "../../models/ingresso.model";
+import { AuthService } from "../../services/auth.service"; // Importação do AuthService
+import { StatusIngresso, Ingresso, RefundIngresso } from "../../models/ingresso.model";
 import { ApiResponse } from "../../models/response.model";
+import { SolicitarReembolsoDialogComponent } from '../solicitar-reembolso-dialog/solicitar-reembolso-dialog.component';
 
 @Component({
   selector: "app-meus-ingressos",
@@ -31,21 +34,41 @@ import { ApiResponse } from "../../models/response.model";
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatChipsModule,
+    DatePipe
   ],
 })
 export class MeusIngressosComponent implements OnInit {
-  private fb = inject(FormBuilder);
-  private ingressosService = inject(IngressosService);
-  private notificationService = inject(NotificationService);
-  private authService = inject(AuthService);
-  private dialog = inject(MatDialog);
+  private fb: FormBuilder; // Declarar como propriedade
+  private ingressosService: IngressosService;
+  private notificationService: NotificationService;
+  public authService: AuthService; // <<-- DECLARAR AQUI (antes de injetar no construtor)
+  private dialog: MatDialog;
 
+   public console = console;
+   
   buscaForm!: FormGroup;
   ingressos: Ingresso[] = [];
   buscando = false;
   emailBuscado = false;
   statusIngresso = StatusIngresso;
+
+  constructor( // <<-- ALTERADO AQUI
+    fb: FormBuilder, // Sem 'private' se já declarou acima
+    ingressosService: IngressosService,
+    notificationService: NotificationService,
+    authService: AuthService, // <<-- ALTERADO AQUI
+    dialog: MatDialog // Injeção do MatDialog
+  ) {
+    // Atribuir as injeções às propriedades
+    this.fb = fb;
+    this.ingressosService = ingressosService;
+    this.notificationService = notificationService;
+    this.authService = authService; // <<-- ATRIBUIÇÃO AQUI
+    this.dialog = dialog;
+  }
 
   ngOnInit(): void {
     this.criarForm();
@@ -81,11 +104,12 @@ export class MeusIngressosComponent implements OnInit {
             this.ingressos = [];
           }
         },
-        error: () => {
+        error: (err) => {
           this.buscando = false;
           this.emailBuscado = true;
           this.ingressos = [];
           this.notificationService.error("Erro ao buscar ingressos");
+          console.error("Erro na busca de ingressos por email:", err);
         },
       });
     }
@@ -108,61 +132,123 @@ export class MeusIngressosComponent implements OnInit {
           this.notificationService.error(response.mensagem);
         }
       },
-      error: () => {
+      error: (err) => {
         this.buscando = false;
         this.ingressos = [];
         this.notificationService.error("Erro ao buscar seus ingressos.");
+        console.error("Erro na busca de meus ingressos:", err);
       },
     });
   }
 
-  getStatusColor(status: StatusIngresso): string {
-    switch (status) {
-      case StatusIngresso.Ativo:
-        return "primary";
-      case StatusIngresso.Cancelado:
-        return "warn";
-      case StatusIngresso.Usado:
-        return "accent";
-      default:
-        return "";
+  getStatusColor(ingresso: Ingresso): string {
+    if (ingresso.motivoDevolucao || ingresso.dataDevolucao) {
+      return "warn";
     }
+    if (!ingresso.ativo) {
+      return "accent";
+    }
+    return "primary";
+  }
+
+  getStatusText(ingresso: Ingresso): string {
+    if (ingresso.motivoDevolucao || ingresso.dataDevolucao) {
+      return StatusIngresso.Cancelado;
+    }
+    if (!ingresso.ativo) {
+      return StatusIngresso.Usado;
+    }
+    return StatusIngresso.Ativo;
   }
 
   podeReembolsar(ingresso: Ingresso): boolean {
-    if (!ingresso.evento?.dataEvento) return false;
+    console.log(`--- Depurando ingresso ID: ${ingresso.id} (Evento: ${ingresso.evento?.nome || 'N/A'}) ---`);
+    console.log(`Ingresso ATIVO (do backend): ${ingresso.ativo}`);
+    console.log(`Ingresso completo para depuração:`, ingresso);
+
+    if (!ingresso.ativo || ingresso.motivoDevolucao || ingresso.dataDevolucao) {
+      console.log(`RESULTADO: Não reembolsável. Motivo: Ingresso não está ATIVO ou já foi solicitado reembolso/devolvido.`);
+      return false;
+    }
+
+    console.log(`Dados do Evento: ${JSON.stringify(ingresso.evento)}`);
+    if (!ingresso.evento || !ingresso.evento.dataEvento) {
+      console.log(`RESULTADO: Não reembolsável. Motivo: Dados do evento ou data do evento faltando.`);
+      return false;
+    }
 
     const dataEvento = new Date(ingresso.evento.dataEvento);
     const agora = new Date();
-    const diferencaHoras = (dataEvento.getTime() - agora.getTime()) / (1000 * 60 * 60);
+    const diferencaMs = dataEvento.getTime() - agora.getTime();
+    const diferencaHoras = diferencaMs / (1000 * 60 * 60);
 
-    return diferencaHoras > 24;
+    console.log(`Data do Evento (convertida): ${dataEvento.toLocaleString('pt-BR')}`);
+    console.log(`Hora Atual: ${agora.toLocaleString('pt-BR')}`);
+    console.log(`Diferença em horas até o evento: ${diferencaHoras}`);
+
+    const elegivelPeloPrazo = diferencaHoras > 24;
+    if (!elegivelPeloPrazo) {
+      console.log(`RESULTADO: Não reembolsável. Motivo: Faltam menos de 24 horas para o evento ou evento já passou.`);
+    } else {
+      console.log(`RESULTADO: Reembolsável. Motivo: Faltam mais de 24 horas para o evento.`);
+    }
+    console.log(`--- Fim da depuração para ingresso ID: ${ingresso.id} ---`);
+
+    return elegivelPeloPrazo;
   }
 
   solicitarReembolso(ingresso: Ingresso): void {
-    this.notificationService.info("Funcionalidade de reembolso será implementada");
+    const dialogRef = this.dialog.open(SolicitarReembolsoDialogComponent, {
+      width: '400px',
+      data: { ingresso },
+      disableClose: true,
+      panelClass: 'modern-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((motivo: string | undefined) => {
+      if (motivo) {
+        this.notificationService.info('Solicitando reembolso...');
+        const refundData: RefundIngresso = { motivo: motivo };
+
+        this.ingressosService.solicitarReembolso(ingresso.id, refundData).subscribe({
+          next: (response: ApiResponse<boolean>) => {
+            if (response.sucesso) {
+              this.notificationService.success('Solicitação de reembolso enviada com sucesso!');
+              this.buscarMeusIngressos();
+            } else {
+              this.notificationService.error(response.mensagem || 'Falha ao solicitar reembolso.');
+            }
+          },
+          error: (err) => {
+            this.notificationService.error('Erro na comunicação ao solicitar reembolso.');
+            console.error('Erro de reembolso:', err);
+          },
+        });
+      } else {
+        this.notificationService.info('Solicitação de reembolso cancelada.');
+      }
+    });
   }
 
-baixarIngresso(ingresso: Ingresso): void {
-  const ingressoId = ingresso.id;
+  baixarIngresso(ingresso: Ingresso): void {
+    const ingressoId = ingresso.id;
 
-  this.ingressosService.baixarIngressoPdf(ingressoId).subscribe({
-    next: (blob) => {
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `ingresso_${ingressoId}.pdf`;
-      link.click();
-      window.URL.revokeObjectURL(url);
-      this.notificationService.success("Download iniciado com sucesso.");
-    },
-    error: (err) => {
-      this.notificationService.error("Erro ao baixar o ingresso.");
-    }
-  });
+    this.ingressosService.baixarIngressoPdf(ingressoId).subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `ingresso_${ingressoId}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+        this.notificationService.success('Download do ingresso iniciado.');
+      },
+      error: (err) => {
+        this.notificationService.error('Erro ao baixar ingresso.');
+        console.error('Erro ao baixar ingresso:', err);
+      }
+    });
+  }
 }
-
-}
-
-
-

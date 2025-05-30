@@ -1,1 +1,0 @@
-{"ast":null,"code":"export var StatusIngresso = /*#__PURE__*/function (StatusIngresso) {\n  StatusIngresso[\"Ativo\"] = \"Ativo\";\n  StatusIngresso[\"Cancelado\"] = \"Cancelado\";\n  StatusIngresso[\"Usado\"] = \"Usado\";\n  return StatusIngresso;\n}(StatusIngresso || {});","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

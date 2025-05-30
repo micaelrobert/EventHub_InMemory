@@ -92,6 +92,7 @@ export class IngressosService {
     responseType: 'blob',
     
   });
-}
-    
-}
+
+  
+
+  }}

@@ -1,48 +1,79 @@
-<div class="header">
-  <h1 class="titulo-com-impacto">
-    <mat-icon class="titulo-icone">confirmation_number</mat-icon>
-    Meus Ingressos
-  </h1>
-  <h2 class="subtitulo">Acompanhe os ingressos que você adquiriu</h2>
+<div class="my-tickets-page-wrapper">
+
+  <div class="page-title-section animate-fade-in-down">
+    <h1 class="main-title-impact">
+      <mat-icon class="main-title-icon">confirmation_number</mat-icon>
+      Meus Ingressos
+    </h1>
+    <p class="main-subtitle">
+      Visualize e gerencie todos os seus ingressos de eventos.
+    </p>
+ 
+    <p class="header-info-text" *ngIf="!authService.isLoggedIn()">
+      Faça login para ver seus ingressos.
+    </p>
+  </div>
+
+
+  <div *ngIf="buscando" class="loading-full-page-indicator">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Buscando seus ingressos...</p>
+  </div>
+
+  <div *ngIf="!buscando && ingressos.length === 0" class="no-tickets-display animate-fade-in-up delay-1">
+    <mat-icon>sentiment_dissatisfied</mat-icon>
+    <h3>Nenhum ingresso encontrado.</h3>
+    <p>Parece que você ainda não tem ingressos. Explore nossos eventos!</p>
+    <button mat-raised-button color="primary" routerLink="/eventos">
+      <mat-icon>event</mat-icon> Encontrar Eventos
+    </button>
+  </div>
+
+  <div class="tickets-grid-container" *ngIf="ingressos.length > 0 && !buscando">
+    <mat-card class="ticket-card animate-fade-in-scale" *ngFor="let ingresso of ingressos; let i = index"
+      [style.--animation-delay]="(i * 0.1) + 's'">
+      <mat-card-header class="ticket-card-header">
+        <mat-card-title class="event-name">{{ ingresso.evento?.nome || 'Evento Desconhecido' }}</mat-card-title>
+        
+      </mat-card-header>
+
+      <mat-card-content class="ticket-card-content">
+        <div class="ticket-detail-group">
+          <p><strong>Comprador:</strong> {{ ingresso.nomeComprador }}</p>
+          <p><strong>Email:</strong> {{ ingresso.emailComprador }}</p>
+          <p><strong>Telefone:</strong> {{ ingresso.telefoneComprador }}</p>
+        </div>
+
+        <div class="ticket-detail-group">
+          
+         
+          <p><strong>Data da Compra:</strong> {{ ingresso.dataCompra | date:'dd/MM/yyyy HH:mm' }}</p>
+          <p *ngIf="ingresso.evento?.dataEvento"><strong>Data do Evento:</strong> {{ ingresso.evento?.dataEvento | date:'dd/MM/yyyy HH:mm' }}</p>
+        </div>
+
+        <div class="ticket-status-row">
+          <strong>Status:</strong>
+          <mat-chip-row [color]="getStatusColor(ingresso)" selected>{{ getStatusText(ingresso) }}</mat-chip-row>
+        </div>
+        <p *ngIf="ingresso.dataDevolucao" class="refund-info"><strong>Data Devolução:</strong> {{ ingresso.dataDevolucao | date:'dd/MM/yyyy HH:mm' }}</p>
+        <p *ngIf="ingresso.motivoDevolucao" class="refund-info"><strong>Motivo Devolução:</strong> {{ ingresso.motivoDevolucao }}</p>
+      </mat-card-content>
+
+      <mat-card-actions class="ticket-card-actions">
+        <button mat-icon-button color="primary" matTooltip="Baixar ingresso" (click)="baixarIngresso(ingresso)">
+          <mat-icon>download</mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          color="warn"
+          matTooltip="Solicitar reembolso"
+          (click)="solicitarReembolso(ingresso)"
+          [disabled]="!podeReembolsar(ingresso)"
+        >
+          <mat-icon>undo</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>
-
-<p class="fade-slide delay-2">
-  Aqui você pode visualizar todos os seus ingressos comprados de forma prática.
-</p>
-
-<div
-  class="ingressos-cards fade-slide delay-3"
-  *ngIf="ingressos && ingressos.length > 0; else semIngressos"
->
-  <mat-card class="ingresso-card" *ngFor="let ingresso of ingressos">
-    <mat-card-content>
-      <mat-icon color="primary">confirmation_number</mat-icon>
-      <h3>{{ ingresso.evento?.nome }}</h3>
-      <p><strong>Data:</strong> {{ ingresso.evento?.dataEvento | date: 'dd/MM/yyyy HH:mm' }}</p>
-      <p><strong>Local:</strong> {{ ingresso.evento?.local }}</p>
-    
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="baixarIngresso(ingresso)">
-        Baixar Ingresso
-      </button>
-      <button
-        mat-stroked-button
-        color="warn"
-        (click)="solicitarReembolso(ingresso)"
-        [disabled]="!podeReembolsar(ingresso)"
-      >
-        Solicitar Reembolso
-      </button>
-    </mat-card-actions>
-  </mat-card>
-</div>
-
-<ng-template #semIngressos>
-  <mat-card class="ingresso-card fade-slide delay-3 sem-ingresso-card">
-    <mat-card-content>
-      <mat-icon>event_busy</mat-icon>
-      <h3>Você ainda não possui ingressos comprados.</h3>
-    </mat-card-content>
-  </mat-card>
-</ng-template>

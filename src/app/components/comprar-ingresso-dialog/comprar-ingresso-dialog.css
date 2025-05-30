@@ -1,127 +1,271 @@
-.dialog-container {
-  width: 100%;
-  max-width: 500px;
+/* src/app/comprar-ingresso-page/comprar-ingresso-page.component.css */
+
+/* Container Principal da Página */
+.purchase-page-wrapper {
+  display: flex;
+  justify-content: center; /* Centraliza o conteúdo principal */
+  align-items: flex-start; /* Alinha o conteúdo ao topo */
+  min-height: calc(100vh - var(--toolbar-height, 64px)); /* Altura total da viewport menos a altura da toolbar */
   padding: 20px;
   box-sizing: border-box;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Fundo de gradiente do seu tema */
 }
 
-.dialog-header {
-  position: relative;
+/* Estado de Carregamento/Erro */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  min-height: 300px; /* Garante que o spinner e a mensagem tenham espaço */
+  color: white;
+  font-size: 1.2rem;
+}
+
+/* Botão Voltar */
+.back-button {
+  align-self: flex-start; /* Alinha o botão de voltar à esquerda */
   margin-bottom: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
 
-.dialog-header h2 {
-  margin: 0;
-  font-size: 1.5rem;
+.back-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Card Principal da Compra */
+.modern-purchase-card {
+  width: 100%;
+  max-width: 800px; /* Largura máxima para o card em telas maiores */
+  background: white; /* Fundo sólido para o card */
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* Sombra mais suave e moderna */
+  padding: 0; /* Remover padding padrão do mat-card para controlar internamente */
+  box-sizing: border-box;
+  overflow: hidden; /* Garante que a imagem arredondada não vaze */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cabeçalho do Card */
+.modern-purchase-card .card-header {
+  padding: 24px;
+  background-color: #f8f8f8; /* Um fundo suave para o cabeçalho */
+  border-bottom: 1px solid #eee;
+}
+
+.modern-purchase-card .mat-card-title {
+  font-size: 1.8rem;
+  font-weight: 700;
   color: #333;
+  margin-bottom: 5px;
 }
 
-.dialog-header p {
-  margin: 5px 0 0;
+.modern-purchase-card .mat-card-subtitle {
+  font-size: 0.95rem;
   color: #666;
 }
 
-.close-btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-.event-info {
+/* Conteúdo Principal do Card (event-display-area, form, total) */
+.card-content-wrapper {
+  padding: 24px;
   display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
+  flex-direction: column;
+  gap: 25px; /* Espaçamento entre as seções: infos, form, total */
 }
 
-.event-image {
-  width: 120px;
-  height: 120px;
-  border-radius: 8px;
+/* Seção de Exibição do Evento */
+.event-display-area {
+  display: flex;
+  gap: 25px;
+  align-items: flex-start;
+  padding: 15px;
+  border-radius: 12px;
+  background-color: #fefefe;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.03); /* Sombra interna sutil */
+}
+
+.event-image-container {
+  width: 180px; /* Tamanho maior para a imagem */
+  height: 180px;
+  border-radius: 12px;
   overflow: hidden;
+  flex-shrink: 0; /* Impede que a imagem encolha */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.event-image img {
+.event-cover-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.event-details {
-  flex: 1;
+.event-details-summary {
+  flex: 1; /* Ocupa o espaço restante */
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Espaçamento entre as linhas de detalhe */
 }
 
-.event-details h3 {
-  margin: 0 0 10px;
-  font-size: 1.2rem;
+.event-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 10px; /* Margem ajustada */
 }
 
-.detail {
+.detail-line {
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: #555;
 }
 
-.detail mat-icon {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
-  margin-right: 5px;
-  color: #666;
+.detail-line mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  color: #764ba2; /* Cor do seu gradiente primário */
 }
 
-.price {
-  margin-top: 10px;
+.ticket-price {
+  font-size: 1.4rem;
   font-weight: bold;
-  font-size: 1.1rem;
+  color: #1a1a1a;
+  margin-top: 15px;
 }
 
-.price span {
+.ticket-price span {
+  font-size: 1rem;
   font-weight: normal;
-  font-size: 0.9rem;
   color: #666;
 }
 
-.purchase-form {
+.tickets-available {
+  font-size: 0.9rem;
+  color: #764ba2; /* Cor destacada para disponibilidade */
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+/* Divisor */
+mat-divider {
+  border-top-color: #e0e0e0;
+  margin: 15px 0; /* Espaço ao redor do divisor */
+}
+
+/* Formulário de Compra */
+.purchase-form-layout {
   display: grid;
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: 18px; /* Espaçamento maior entre campos */
+  grid-template-columns: 1fr; /* Coluna única por padrão */
 }
 
-.total-section {
-  border-top: 1px solid #eee;
+/* Ajustes para mat-form-field */
+.purchase-form-layout mat-form-field {
+  width: 100%;
+}
+
+/* Seção de Resumo Total */
+.total-summary-section {
   padding-top: 15px;
-  margin-bottom: 20px;
-}
-
-.total-row {
+  border-top: 1px dashed #e0e0e0; /* Borda tracejada suave */
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-}
-
-.total-row.final {
-  font-weight: bold;
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #eee;
-}
-
-.dialog-actions {
-  display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
   gap: 10px;
 }
 
+.total-line-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.05rem;
+  color: #333;
+}
+
+.final-total {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #1a1a1a;
+  border-top: 1px solid #ddd; /* Linha mais forte para o total final */
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+/* Ações do Card (Botões) */
+.card-actions-row {
+  padding: 16px 24px;
+  justify-content: flex-end; /* Alinha botões à direita */
+  gap: 12px;
+  border-top: 1px solid #eee;
+}
+
 /* Responsividade */
-@media (max-width: 600px) {
-  .event-info {
-    flex-direction: column;
+@media (max-width: 900px) {
+  .modern-purchase-card {
+    max-width: 600px; /* Reduz a largura máxima do card */
   }
-  
-  .event-image {
-    width: 100%;
+
+  .event-display-area {
+    flex-direction: column; /* Pilha a imagem e detalhes */
+    text-align: center;
+    align-items: center;
+  }
+
+  .event-image-container {
+    width: 220px; /* Aumenta a imagem para preencher melhor a coluna */
+    height: 220px;
+    margin-bottom: 15px; /* Espaçamento abaixo da imagem */
+  }
+
+  .event-details-summary {
+    align-items: center; /* Centraliza o texto dos detalhes */
+  }
+
+  .detail-line {
+    justify-content: center; /* Centraliza ícones e texto */
+  }
+}
+
+@media (max-width: 600px) {
+  .purchase-page-wrapper {
+    padding: 10px;
+  }
+
+  .modern-purchase-card {
+    border-radius: 8px; /* Bordas menos arredondadas em telas pequenas */
+  }
+
+  .modern-purchase-card .card-header,
+  .card-content-wrapper,
+  .card-actions-row {
+    padding: 15px; /* Reduz padding em telas pequenas */
+  }
+
+  .purchase-form-layout {
+    gap: 12px;
+  }
+
+  .event-image-container {
+    width: 180px; /* Imagem menor em telas muito pequenas */
     height: 180px;
+  }
+}
+
+@media (min-width: 768px) {
+  .purchase-form-layout {
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas para formulário em telas maiores */
+    column-gap: 20px; /* Espaçamento entre as colunas */
+  }
+  /* O mat-form-field de quantidade pode ir para uma coluna própria se houver espaço */
+  .purchase-form-layout mat-form-field:last-of-type {
+    grid-column: span 2; /* Faz o último campo ocupar 2 colunas */
+    /* Ou você pode criar uma div para o último campo e ajustar o grid */
   }
 }

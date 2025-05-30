@@ -1,0 +1,67 @@
+
+
+/* Estilos para o título do diálogo */
+h2[mat-dialog-title] {
+  padding: 24px 24px 0; /* Padding padrão para títulos de diálogo do Material */
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Estilos para o conteúdo principal do diálogo */
+.refund-dialog-content {
+  padding: 20px 24px; /* Padding interno */
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espaçamento entre os elementos do conteúdo */
+  min-height: 0; /* Garante que o conteúdo possa encolher e rolar */
+  overflow-y: auto; /* Permite rolagem vertical se o conteúdo for muito grande */
+}
+
+.refund-dialog-content p {
+  margin-bottom: 5px; /* Espaçamento entre parágrafos */
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.refund-dialog-content h3.event-title {
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+/* Estilos para o formulário de reembolso */
+.refund-form {
+  width: 100%;
+}
+
+.full-width-field {
+  width: 100%;
+}
+
+/* Estilos para os botões de ação do diálogo */
+.refund-dialog-actions {
+  padding: 16px 24px;
+  border-top: 1px solid #eee; /* Linha separadora dos botões */
+  display: flex;
+  justify-content: flex-end; /* Alinha os botões à direita */
+  gap: 10px; /* Espaçamento entre os botões */
+  flex-shrink: 0; /* Impede que os botões encolham */
+}
+
+/* Estilos para o placeholder da textarea */
+textarea::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+/* Responsividade básica para telas menores */
+@media (max-width: 600px) {
+  h2[mat-dialog-title],
+  .refund-dialog-content,
+  .refund-dialog-actions {
+    padding: 16px; /* Reduz o padding em telas menores */
+  }
+}
