@@ -1,32 +1,28 @@
-
-
-/* --- Conteiner Principal da Página --- */
 .my-tickets-page-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centraliza o conteúdo horizontalmente */
+  align-items: center;
   padding: 20px;
-  min-height: calc(100vh - var(--toolbar-height, 64px)); /* Ajusta a altura mínima considerando a toolbar */
+  min-height: calc(100vh - var(--toolbar-height, 64px));
   box-sizing: border-box;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Fundo de gradiente */
-  color: #fff; /* Cor do texto padrão para este fundo */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
 }
 
-/* --- Card de Cabeçalho (Título e Subtítulo) --- */
 .tickets-header-card {
-  width: 100%; /* Garante que o card tente ocupar a largura total do pai */
-  max-width: 900px; /* Largura máxima para o cabeçalho */
-  margin-bottom: 30px; /* Espaço abaixo do cabeçalho */
-  background: rgba(255, 255, 255, 0.95); /* Fundo quase branco */
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 30px;
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   padding: 25px 30px;
   box-sizing: border-box;
   text-align: center;
-  overflow: hidden; /* Garante que elementos arredondados/animados não vazem */
-  display: block; /* Força o card a se comportar como um elemento de bloco */
-  margin-left: auto; /* Margem automática à esquerda para centralizar */
-  margin-right: auto; /* Margem automática à direita para centralizar */
+  overflow: hidden;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .tickets-header-card .card-header {
@@ -34,23 +30,23 @@
 }
 
 .main-title-impact {
-  font-size: 1.8rem; /* Reduzido de 2.2rem */
+  font-size: 1.8rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #ffffff, #448aff); /* Gradiente para o texto do título */
+  background: linear-gradient(135deg, #ffffff, #448aff);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   display: flex;
   align-items: center;
-  justify-content: center; /* Garante centralização horizontal */
-  gap: 8px; /* Reduzido de 10px */
+  justify-content: center;
+  gap: 8px;
   letter-spacing: -0.5px;
   margin-bottom: 10px;
 }
 
 .main-title-icon {
-  font-size: 2rem; /* Reduzido de 2.5rem, mas ainda maior que o texto */
-  color: #7e57c2; /* Cor sólida para o ícone */
+  font-size: 2rem;
+  color: #7e57c2;
 }
 
 .main-subtitle {
@@ -65,7 +61,6 @@
   margin-top: 10px;
 }
 
-/* --- Indicador de Carregamento Global --- */
 .loading-full-page-indicator {
   display: flex;
   flex-direction: column;
@@ -78,10 +73,9 @@
 }
 
 .loading-full-page-indicator mat-spinner {
-  --mdc-circular-progress-active-indicator-color: white; /* Cor do spinner para fundo escuro */
+  --mdc-circular-progress-active-indicator-color: white;
 }
 
-/* --- Mensagem de Nenhum Ingresso --- */
 .no-tickets-display {
   display: flex;
   flex-direction: column;
@@ -98,7 +92,7 @@
 
 .no-tickets-display mat-icon {
   font-size: 4rem;
-  color: #764ba2; /* Cor primária */
+  color: #764ba2;
   margin-bottom: 20px;
 }
 
@@ -114,18 +108,16 @@
   margin-bottom: 25px;
 }
 
-/* --- Grid de Ingressos --- */
 .tickets-grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Auto-ajustável */
-  gap: 25px; /* Espaçamento entre os cards */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
   width: 100%;
-  max-width: 1200px; /* Largura máxima do grid */
+  max-width: 1200px;
 }
 
-/* --- Card de Ingresso Individual --- */
 .ticket-card {
-  background: rgba(255, 255, 255, 0.98); /* Fundo quase branco para o card */
+  background: rgba(255, 255, 255, 0.98);
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   overflow: hidden;
@@ -133,18 +125,18 @@
   flex-direction: column;
   justify-content: space-between;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  will-change: transform, box-shadow; /* Otimização para animação */
-  animation-fill-mode: backwards; /* Aplica o estilo inicial da animação antes dela começar */
+  will-change: transform, box-shadow;
+  animation-fill-mode: backwards;
 }
 
 .ticket-card:hover {
-  transform: translateY(-8px); /* Elevação no hover */
+  transform: translateY(-8px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
 .ticket-card-header {
   padding: 15px 20px;
-  background: linear-gradient(135deg, #a77be6 0%, #8b5fdf 100%); /* Gradiente no cabeçalho do card */
+  background: linear-gradient(135deg, #a77be6 0%, #8b5fdf 100%);
   color: white;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -164,12 +156,12 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Espaçamento entre grupos de detalhes */
+  gap: 15px;
   color: #333;
 }
 
 .ticket-detail-group p {
-  margin: 0 0 5px; /* Ajuste para espaçamento entre parágrafos de detalhe */
+  margin: 0 0 5px;
   font-size: 0.95rem;
   color: #444;
 }
@@ -187,28 +179,24 @@
   font-size: 0.95rem;
 }
 
-/* Estilos para o chip de status */
 mat-chip-row {
   font-weight: bold;
-  height: 28px; /* Altura padrão para o chip */
+  height: 28px;
 }
 
-/* Informações de Reembolso */
 .refund-info {
   font-size: 0.85rem;
   color: #888;
   margin-top: 5px;
 }
 
-/* Ações do Card (Botões) */
 .ticket-card-actions {
   padding: 10px 15px;
-  justify-content: flex-end; /* Alinha botões à direita */
+  justify-content: flex-end;
   border-top: 1px solid #eee;
   background-color: #fcfcfc;
 }
 
-/* --- Animações --- */
 @keyframes fadeInDown {
   from {
     opacity: 0;
@@ -248,24 +236,23 @@ mat-chip-row {
 
 .animate-fade-in-scale {
   animation: fadeInScale 0.4s ease-out forwards;
-  animation-delay: var(--animation-delay, 0s); /* Usa uma variável CSS para delay */
+  animation-delay: var(--animation-delay, 0s);
 }
 
 .animate-fade-in-up {
   animation: fadeInUp 0.6s ease-out forwards;
 }
 
-/* --- Responsividade --- */
 @media (max-width: 900px) {
   .tickets-header-card {
     padding: 20px;
   }
   .main-title-impact {
-    font-size: 1.6rem; /* Ajustado novamente */
+    font-size: 1.6rem;
     gap: 8px;
   }
   .main-title-icon {
-    font-size: 1.8rem; /* Ajustado novamente */
+    font-size: 1.8rem;
   }
   .main-subtitle {
     font-size: 1rem;
@@ -282,12 +269,12 @@ mat-chip-row {
     padding: 15px;
   }
   .main-title-impact {
-    font-size: 1.4rem; /* Ainda menor em telas muito pequenas */
-    flex-direction: column; /* Empilha ícone e texto */
+    font-size: 1.4rem;
+    flex-direction: column;
     gap: 5px;
   }
   .main-title-icon {
-    font-size: 1.6rem; /* Ícone menor em telas muito pequenas */
+    font-size: 1.6rem;
   }
   .main-subtitle {
     font-size: 0.9rem;

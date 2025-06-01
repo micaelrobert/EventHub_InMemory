@@ -9,22 +9,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { AuthService } from '../../../services/auth.service'; // Ajuste o caminho se necessário
-import { RegistroRequestDto } from '../../../models/auth.model'; // Ajuste o caminho se necessário
-import { NotificationService } from '../../../services/notification.service'; // Ajuste o caminho se necessário
-import { ApiResponse } from '../../../models/response.model'; // Importando ApiResponse
-import { HttpErrorResponse } from '@angular/common/http'; // Importando HttpErrorResponse
+import { AuthService } from '../../../services/auth.service';
+import { RegistroRequestDto } from '../../../models/auth.model';
+import { NotificationService } from '../../../services/notification.service';
+import { ApiResponse } from '../../../models/response.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
-// Validador customizado para verificar se as senhas coincidem
 export function senhasCoincidemValidator(control: AbstractControl): ValidationErrors | null {
   const senha = control.get('senha');
   const confirmacaoSenha = control.get('confirmacaoSenha');
 
-  if (senha?.value !== confirmacaoSenha?.value) { // Verifica se ambos existem antes de comparar
+  if (senha?.value !== confirmacaoSenha?.value) {
     confirmacaoSenha?.setErrors({ senhasNaoCoincidem: true });
     return { senhasNaoCoincidem: true };
   }
-  // Se as senhas coincidirem, limpa APENAS o erro 'senhasNaoCoincidem'
   if (confirmacaoSenha?.hasError('senhasNaoCoincidem')) {
     const बाकीErrors = { ...confirmacaoSenha.errors };
     delete बाकीErrors['senhasNaoCoincidem'];
@@ -67,7 +65,6 @@ export class RegistroComponent implements OnInit {
 
   ngOnInit(): void {
     this.registroForm = this.fb.group({
-      // <<< ADICIONADO nomeUsuario AO FORMULÁRIO >>>
       nomeUsuario: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.email]],
       senha: ['', [Validators.required, Validators.minLength(6)]],
@@ -83,8 +80,6 @@ export class RegistroComponent implements OnInit {
     }
 
     this.isLoading = true;
-    // O payload agora incluirá nomeUsuario, email, senha, e confirmacaoSenha
-    // pois o DTO no backend espera todos eles.
     const payload: RegistroRequestDto = this.registroForm.value;
 
     this.authService.registrar(payload).subscribe({
@@ -95,8 +90,8 @@ export class RegistroComponent implements OnInit {
           this.router.navigate(['/login']);
         } else {
           const errorMsg = (response.erros && response.erros.length > 0)
-                           ? response.erros.join(' ')
-                           : (response.mensagem || 'Falha no registro. Verifique os dados.');
+                            ? response.erros.join(' ')
+                            : (response.mensagem || 'Falha no registro. Verifique os dados.');
           this.notificationService.error(errorMsg);
         }
       },
@@ -104,13 +99,13 @@ export class RegistroComponent implements OnInit {
         this.isLoading = false;
         let errorMsg = 'Erro ao tentar registrar. Tente novamente mais tarde.';
         if (err.error && typeof err.error === 'object') {
-            const validationErrors = err.error.errors; // ASP.NET Core padrão para erros de validação do ModelState
+            const validationErrors = err.error.errors;
             if (validationErrors && typeof validationErrors === 'object') {
-                errorMsg = Object.values(validationErrors).flat().join(' ');
-            } else if (err.error.mensagem) { // Nosso ResponseDto customizado
-                errorMsg = err.error.mensagem;
+              errorMsg = Object.values(validationErrors).flat().join(' ');
+            } else if (err.error.mensagem) {
+              errorMsg = err.error.mensagem;
             }
-        } else if (typeof err.error === 'string') { // Caso o erro seja uma string simples
+        } else if (typeof err.error === 'string') {
              errorMsg = err.error;
         }
         this.notificationService.error(errorMsg);

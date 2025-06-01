@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 64px); /* 64px é a altura comum de um toolbar */
+  min-height: calc(100vh - 64px); 
   padding: 2rem;
   box-sizing: border-box;
 }
@@ -18,24 +18,24 @@
 
 .login-button {
   margin-top: 1rem;
-  min-height: 48px; /* Para acomodar o spinner */
+  min-height: 48px; 
 }
 
 .extra-actions {
   margin-top: 1rem;
-  padding-bottom: 1rem; /* Para dar espaço antes do fim do card */
+  padding-bottom: 1rem; 
 }
 
 .extra-actions a {
   text-decoration: none;
-  color: var(--mat-primary-text-button-color, #1976d2); /* Cor primária ou padrão de link */
+  color: var(--mat-primary-text-button-color, #1976d2); 
 }
 
 .extra-actions a:hover {
   text-decoration: underline;
 }
 
-/* Para o spinner dentro do botão */
+
 .login-button mat-progress-spinner {
   display: inline-block;
   vertical-align: middle;

@@ -1,4 +1,4 @@
-// src/app/evento-list/evento-list.component.ts (AJUSTADO)
+
 
 import { Component, inject, OnInit } from "@angular/core";
 import { CommonModule, DatePipe } from "@angular/common";
@@ -7,10 +7,9 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatCardModule } from "@angular/material/card";
 import { MatChipsModule } from "@angular/material/chips";
-import { RouterModule, Router } from "@angular/router"; // Importar Router aqui
+import { RouterModule, Router } from "@angular/router"; 
 import { MatTooltipModule } from '@angular/material/tooltip';
-// import { MatDialog, MatDialogModule } from '@angular/material/dialog'; // REMOVIDO: Não precisamos mais do MatDialog aqui
-// import { ComprarIngressoDialogComponent } from '../components/comprar-ingresso-dialog/comprar-ingresso-dialog.component'; // REMOVIDO: Não precisamos mais do ComprarIngressoDialogComponent
+
 
 import { EventosService } from "../services/eventos.service";
 import type { Evento } from "../models/evento.model";
@@ -31,15 +30,14 @@ import { NotificationService } from '../services/notification.service';
     MatChipsModule,
     MatTooltipModule,
     DatePipe,
-    // MatDialogModule, // REMOVIDO: Não precisamos mais do MatDialogModule
+    
   ],
   templateUrl: "./evento-list.component.html",
   styleUrls: ["./evento-list.component.css"],
 })
 export class EventoListComponent implements OnInit {
   private eventosService = inject(EventosService);
-  // private dialog = inject(MatDialog); // REMOVIDO: Não precisamos mais do MatDialog aqui
-  private router = inject(Router); // ADICIONADO: Injetar Router para navegação
+  private router = inject(Router); 
   public authService = inject(AuthService);
   private notificationService = inject(NotificationService);
 
@@ -112,9 +110,9 @@ export class EventoListComponent implements OnInit {
     }
   }
 
-  // MÉTODO COMPRAR INGRESSO ATUALIZADO PARA NAVEGAR PARA A NOVA PAGE
+  
   comprarIngresso(evento: Evento): void {
-    // Navega para a nova rota de compra, passando o ID do evento
+    
     this.router.navigate(['/comprar', evento.id]);
   }
 }

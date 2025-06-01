@@ -1,28 +1,25 @@
-// O que esperamos receber do backend após o login
+// backend após o login
 export interface LoginResponseDto {
   token: string;
   email: string;
   papel: string;
-  nomeUsuario: string; // <<< ADICIONADO
+  nomeUsuario: string; 
   expiracao: Date;
 }
 
-// Uma interface simples para guardar informações do usuário logado no serviço
 export interface UsuarioLogado {
   email: string;
   papel: string;
-  nomeUsuario: string; // <<< ADICIONADO
+  nomeUsuario: string; 
 }
 
-// DTO para enviar ao fazer login
 export interface LoginRequestDto {
   email: string;
   senha: string;
 }
 
-// DTO para enviar ao registrar
 export interface RegistroRequestDto {
-  nomeUsuario: string; // <<< ADICIONADO
+  nomeUsuario: string; 
   email: string;
   senha: string;
   confirmacaoSenha: string;

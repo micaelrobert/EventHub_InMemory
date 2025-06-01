@@ -1,21 +1,18 @@
-// src/app/comprar-ingresso-page/comprar-ingresso-page.component.ts
+
 
 import { Component, OnInit, inject } from "@angular/core";
 import { CommonModule, DatePipe } from "@angular/common";
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-
-// Angular Material - Módulos adicionados para correção
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatSelectModule } from "@angular/material/select";
 import { MatCardModule } from '@angular/material/card';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // ADICIONADO para mat-spinner
-import { MatDividerModule } from '@angular/material/divider'; // ADICIONADO para mat-divider
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+import { MatDividerModule } from '@angular/material/divider'; 
 
-// Serviços e modelos
 import { IngressosService } from "../../services/ingressos.service";
 import { NotificationService } from "../../services/notification.service";
 import { Evento } from "../../models/evento.model";
@@ -37,11 +34,11 @@ import { EventosService } from "../../services/eventos.service";
     DatePipe,
     MatCardModule,
     RouterModule,
-    MatProgressSpinnerModule, // ADICIONAR AQUI
-    MatDividerModule, // ADICIONAR AQUI
+    MatProgressSpinnerModule, 
+    MatDividerModule, 
   ],
-  // template original ainda aponta para comprar-ingresso-dialog.html, corrigir para comprar-ingresso-page.html
-  templateUrl: "./comprar-ingresso-dialog.html", // CORRIGIDO O CAMINHO DO TEMPLATE
+ 
+  templateUrl: "./comprar-ingresso-dialog.html", 
   styleUrls: ["./comprar-ingresso-dialog.css"]
 })
 export class ComprarIngressoPageComponent implements OnInit {
@@ -72,8 +69,7 @@ export class ComprarIngressoPageComponent implements OnInit {
   }
 
   carregarEvento(id: string): void {
-    // Usando getEventoById para buscar o evento, que é o que você tem no EventosService para ID
-    // Certifique-se que o serviço EventosService.getEventoById(id) existe e espera string ou number
+
     this.eventosService.getEvento(Number(id)).subscribe({
       next: (response: ApiResponse<Evento>) => {
         if (response.sucesso && response.dados) {
@@ -181,11 +177,9 @@ export class ComprarIngressoPageComponent implements OnInit {
     this.compraForm.get('telefoneComprador')?.setValue(value, { emitEvent: false });
   }
 
-  // ADICIONADO: Método para lidar com erro de carregamento de imagem
-  // Este é o método que faltava para (error)="onImageError($event)" no HTML
   handleImageError(event: Event): void {
     const imgElement = event.target as HTMLImageElement;
-    imgElement.src = 'assets/imgs/evento-padrao.jpeg'; // Caminho para sua imagem padrão
+    imgElement.src = 'assets/imgs/evento-padrao.jpeg'; 
   }
   onImageError(event: Event): void {
   const target = event.target as HTMLImageElement;

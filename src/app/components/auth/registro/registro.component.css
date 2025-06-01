@@ -2,14 +2,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 64px); /* Altura da tela menos a toolbar */
+  min-height: calc(100vh - 64px); 
   padding: 2rem;
   box-sizing: border-box;
 }
 
 .registro-card {
   width: 100%;
-  max-width: 450px; /* Um pouco maior para acomodar mais campos se necessário */
+  max-width: 450px; 
 }
 
 .full-width {
@@ -18,7 +18,7 @@
 
 .registro-button {
   margin-top: 1rem;
-  min-height: 48px; /* Para o spinner */
+  min-height: 48px; 
 }
 
 .extra-actions {
@@ -28,7 +28,7 @@
 
 .extra-actions a {
   text-decoration: none;
-  color: var(--primary-solid, #667eea); /* Usando sua variável CSS ou um fallback */
+  color: var(--primary-solid, #667eea); 
 }
 
 .extra-actions a:hover {

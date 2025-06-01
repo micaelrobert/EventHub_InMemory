@@ -6,12 +6,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon'; // Opcional, para ícones no form
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Para feedback de loading
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { AuthService } from '../../../services/auth.service'; // Ajuste o caminho se necessário
-import { LoginRequestDto } from '../../../models/auth.model';   // Ajuste o caminho se necessário
-import { NotificationService } from '../../../services/notification.service'; // Supondo que você tenha este serviço
+import { AuthService } from '../../../services/auth.service';
+import { LoginRequestDto } from '../../../models/auth.model';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
-  private notificationService = inject(NotificationService); // Injetar NotificationService
+  private notificationService = inject(NotificationService);
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -61,21 +61,17 @@ export class LoginComponent implements OnInit {
         this.isLoading = false;
         if (response.sucesso && response.dados) {
           this.notificationService.success('Login realizado com sucesso!');
-          // Redirecionar com base no papel do usuário
           if (response.dados.papel === 'Admin') {
-            this.router.navigate(['/eventos']); // Ou uma rota de dashboard admin
+            this.router.navigate(['/eventos']);
           } else {
-            this.router.navigate(['/catalogo']); // Ou uma rota de dashboard do usuário comum
+            this.router.navigate(['/catalogo']);
           }
         } else {
-          // O backend já deve retornar Unauthorized (401) que cai no 'error',
-          // mas se retornar 200 com sucesso=false:
           this.notificationService.error(response.mensagem || 'Falha no login.');
         }
       },
       error: (err) => {
         this.isLoading = false;
-        // this.notificationService.error(err.error?.mensagem || 'Erro no login. Verifique suas credenciais.');
         if (err.status === 401) {
             this.notificationService.error('Email ou senha inválidos.');
         } else {

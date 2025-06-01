@@ -1,8 +1,8 @@
-// src/app/interceptors/error.interceptor.ts
+
 import type { HttpInterceptorFn, HttpErrorResponse } from "@angular/common/http";
 import { inject } from "@angular/core";
 import { catchError, throwError } from "rxjs";
-import { NotificationService } from "../services/notification.service"; // Ajuste o caminho se necessário
+import { NotificationService } from "../services/notification.service"; 
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const notificationService = inject(NotificationService);
@@ -16,7 +16,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       } else {
         switch (error.status) {
           case 400:
-            // Tenta pegar a mensagem do backend, ou um array de erros do ModelState
+            
             if (error.error?.errors && typeof error.error.errors === 'object') {
                 errorMessage = Object.values(error.error.errors).flat().join(' ');
             } else if (error.error?.mensagem) {
@@ -27,7 +27,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
             break;
           case 401:
             errorMessage = "Não autorizado. Faça login novamente.";
-            // Aqui você poderia também chamar authService.logout() e redirecionar para /login
+            
             break;
           case 403:
             errorMessage = "Acesso negado. Você não tem permissão para este recurso.";
@@ -44,7 +44,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       }
 
       notificationService.error(errorMessage);
-      return throwError(() => error); // Importante relançar o erro
+      return throwError(() => error); 
     }),
   );
 };

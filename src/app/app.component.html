@@ -48,7 +48,7 @@
           </a>
         </ng-container>
 
-        <!-- TEMPLATE LOGADO COM async E FALLBACK -->
+        <!-- TEMPLATE LOGGED IN WITH async AND FALLBACK -->
         <ng-template #loggedInUserActions>
           <div class="user-info" *ngIf="authService.usuarioAtual$ | async as usuario">
             <mat-icon class="user-icon">account_circle</mat-icon>

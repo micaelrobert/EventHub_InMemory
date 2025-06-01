@@ -1,10 +1,7 @@
-// src/app/components/meus-ingressos/meus-ingressos.component.ts (AJUSTADO PARA INJEÇÃO VIA CONSTRUTOR)
 
 import { Component, OnInit, inject } from "@angular/core";
 import { CommonModule, DatePipe } from "@angular/common";
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from "@angular/forms";
-
-// Angular Material
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -13,10 +10,9 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { MatChipsModule } from '@angular/material/chips';
-// Serviços e modelos
 import { IngressosService } from "../../services/ingressos.service";
 import { NotificationService } from "../../services/notification.service";
-import { AuthService } from "../../services/auth.service"; // Importação do AuthService
+import { AuthService } from "../../services/auth.service"; 
 import { StatusIngresso, Ingresso, RefundIngresso } from "../../models/ingresso.model";
 import { ApiResponse } from "../../models/response.model";
 import { SolicitarReembolsoDialogComponent } from '../solicitar-reembolso-dialog/solicitar-reembolso-dialog.component';
@@ -55,18 +51,18 @@ export class MeusIngressosComponent implements OnInit {
   emailBuscado = false;
   statusIngresso = StatusIngresso;
 
-  constructor( // <<-- ALTERADO AQUI
-    fb: FormBuilder, // Sem 'private' se já declarou acima
+  constructor( 
+    fb: FormBuilder, 
     ingressosService: IngressosService,
     notificationService: NotificationService,
-    authService: AuthService, // <<-- ALTERADO AQUI
-    dialog: MatDialog // Injeção do MatDialog
+    authService: AuthService, 
+    dialog: MatDialog 
   ) {
-    // Atribuir as injeções às propriedades
+ 
     this.fb = fb;
     this.ingressosService = ingressosService;
     this.notificationService = notificationService;
-    this.authService = authService; // <<-- ATRIBUIÇÃO AQUI
+    this.authService = authService; 
     this.dialog = dialog;
   }
 

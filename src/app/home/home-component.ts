@@ -15,6 +15,6 @@ import { AuthService } from "../services/auth.service"
 })
 export default class HomeComponent {
   constructor(public authService: AuthService) {
-    // O AuthService já tenta carregar o usuário do localStorage em seu próprio construtor
+    
   }
 }

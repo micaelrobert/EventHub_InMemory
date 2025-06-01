@@ -12,7 +12,7 @@ import { ApiResponse } from '../models/response.model';
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private authApiUrl = `${environment.apiUrl.replace('/eventos', '').replace('/api', '')}/api/auth`; // Ajuste para garantir que fique /api/auth
+  private authApiUrl = `${environment.apiUrl.replace('/eventos', '').replace('/api', '')}/api/auth`; 
 
   private usuarioAtualSubject = new BehaviorSubject<UsuarioLogado | null>(this.getUsuarioLogadoFromStorage());
   public usuarioAtual$ = this.usuarioAtualSubject.asObservable();
@@ -22,7 +22,7 @@ export class AuthService {
   private getUsuarioLogadoFromStorage(): UsuarioLogado | null {
     const email = localStorage.getItem('userEmail');
     const papel = localStorage.getItem('userRole');
-    const nomeUsuario = localStorage.getItem('userName'); // <<< CARREGAR NOME DE USUÁRIO
+    const nomeUsuario = localStorage.getItem('userName'); 
     if (email && papel && nomeUsuario) {
       return { email, papel, nomeUsuario };
     }
@@ -41,11 +41,11 @@ export class AuthService {
             localStorage.setItem('authToken', response.dados.token);
             localStorage.setItem('userEmail', response.dados.email);
             localStorage.setItem('userRole', response.dados.papel);
-            localStorage.setItem('userName', response.dados.nomeUsuario); // <<< SALVAR NOME DE USUÁRIO
+            localStorage.setItem('userName', response.dados.nomeUsuario); 
             this.usuarioAtualSubject.next({
               email: response.dados.email,
               papel: response.dados.papel,
-              nomeUsuario: response.dados.nomeUsuario // <<< ATUALIZAR SUBJECT COM NOME DE USUÁRIO
+              nomeUsuario: response.dados.nomeUsuario 
             });
           }
         })
@@ -60,7 +60,7 @@ export class AuthService {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userRole');
-    localStorage.removeItem('userName'); // <<< REMOVER NOME DE USUÁRIO
+    localStorage.removeItem('userName'); 
     this.usuarioAtualSubject.next(null);
     this.router.navigate(['/login']);
   }
@@ -74,13 +74,12 @@ export class AuthService {
   }
 
   getPapelUsuario(): string | null {
-    if(this.usuarioAtualSubject.value) { // Prioriza o BehaviorSubject
+    if(this.usuarioAtualSubject.value) { // prioritize behaviorSubject
       return this.usuarioAtualSubject.value.papel;
     }
     return localStorage.getItem('userRole'); // Fallback
   }
 
-  // Método para pegar o nome do usuário logado
   getNomeUsuario(): string | null {
     if(this.usuarioAtualSubject.value) {
       return this.usuarioAtualSubject.value.nomeUsuario;

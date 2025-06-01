@@ -25,8 +25,8 @@ import { Ingresso } from '../../models/ingresso.model';
   styleUrls: ['./solicitar-reembolso-dialog.component.css']
 })
 export class SolicitarReembolsoDialogComponent {
-  // Use 'private' ou 'public' com 'inject()' diretamente, e remova do construtor
-  private fb = inject(FormBuilder); // <<--- CORREÇÃO AQUI (já estava assim, mas é a forma correta)
+ 
+  private fb = inject(FormBuilder); 
 
   reembolsoForm: FormGroup;
   ingresso: Ingresso;
@@ -34,28 +34,28 @@ export class SolicitarReembolsoDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<SolicitarReembolsoDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { ingresso: Ingresso }
-    // NÃO INJETE 'fb' AQUI NOVAMENTE SE ESTÁ USANDO inject() ACIMA
+   
   ) {
-    console.log('SolicitarReembolsoDialogComponent: Construtor chamado. Data recebida:', data); // Log
-    this.ingresso = data.ingresso; // 'data.ingresso' deve ser válido
+    console.log('SolicitarReembolsoDialogComponent: Construtor chamado. Data recebida:', data); 
+    this.ingresso = data.ingresso; 
     this.reembolsoForm = this.fb.group({
       motivo: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]]
     });
-    console.log('SolicitarReembolsoDialogComponent: Formulário inicializado. Ingresso:', this.ingresso); // Log
+    console.log('SolicitarReembolsoDialogComponent: Formulário inicializado. Ingresso:', this.ingresso); 
   }
 
   onConfirm(): void {
     if (this.reembolsoForm.valid) {
-      console.log('SolicitarReembolsoDialogComponent: Confirmar clicado. Motivo:', this.reembolsoForm.value.motivo); // Log
+      console.log('SolicitarReembolsoDialogComponent: Confirmar clicado. Motivo:', this.reembolsoForm.value.motivo); 
       this.dialogRef.close(this.reembolsoForm.value.motivo);
     } else {
-      console.log('SolicitarReembolsoDialogComponent: Formulário inválido ao confirmar.'); // Log
+      console.log('SolicitarReembolsoDialogComponent: Formulário inválido ao confirmar.'); 
       this.reembolsoForm.markAllAsTouched();
     }
   }
 
   onCancel(): void {
-    console.log('SolicitarReembolsoDialogComponent: Cancelar clicado.'); // Log
+    console.log('SolicitarReembolsoDialogComponent: Cancelar clicado.'); 
     this.dialogRef.close(undefined);
   }
 }

@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
-/* Reset e Base */
 * {
   margin: 0;
   padding: 0;
@@ -16,7 +15,6 @@ body {
   line-height: 1.6;
 }
 
-/* Design System - Colors */
 :root {
   --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --primary-solid: #667eea;
@@ -42,7 +40,7 @@ body {
   --radius-xl: 24px;
 }
 
-/* Glassmorphism */
+
 .glass {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
@@ -57,7 +55,7 @@ body {
   border-radius: var(--radius-lg);
 }
 
-/* Animations */
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -127,7 +125,7 @@ body {
   box-shadow: var(--shadow-xl);
 }
 
-/* Modern Button */
+
 .btn-modern {
   background: var(--primary);
   color: white;
@@ -166,7 +164,7 @@ body {
   box-shadow: var(--shadow-lg);
 }
 
-/* Gradient Text */
+
 .gradient-text, .text-gradient {
   background: var(--primary);
   -webkit-background-clip: text;
@@ -175,7 +173,7 @@ body {
   font-weight: 700;
 }
 
-/* Loading Skeleton */
+
 .skeleton {
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200px 100%;
@@ -183,7 +181,7 @@ body {
   border-radius: var(--radius-sm);
 }
 
-/* Snackbar Styles */
+
 .success-snackbar {
   background: var(--success) !important;
   color: white !important;
@@ -208,11 +206,11 @@ body {
   border-radius: var(--radius-md) !important;
 }
 
-/* Modern Dialog Styles */
+
 .modern-dialog .mat-mdc-dialog-container {
   border-radius: 24px !important;
-  /* padding: 0 !important; */ /* <--- REMOVIDO OU COMENTADO */
-  /* overflow: hidden !important; */ /* <--- REMOVIDO OU COMENTADO */
+  /* padding: 0  */ 
+  /* overflow: hidden */ 
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
 }
 
@@ -221,7 +219,7 @@ body {
   background: rgba(0, 0, 0, 0.6) !important;
 }
 
-/* Custom Scrollbar */
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -240,7 +238,7 @@ body {
   background: rgba(255, 255, 255, 0.5);
 }
 
-/* Utilities */
+
 .container {
   max-width: 1200px;
   margin: 0 auto;

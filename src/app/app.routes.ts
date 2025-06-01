@@ -8,20 +8,20 @@ export const routes: Routes = [
     loadComponent: () => import("./home/home-component"),
   },
   {
-    path: "eventos", // Rota para a lista de eventos
+    path: "eventos", 
     loadComponent: () => import("./evento-list/evento-list.component").then((m) => m.EventoListComponent),
   },
-  // --- ROTA PARA DETALHES DO EVENTO ---
+ 
   {
-    path: "eventos/:id", // Ex: /eventos/1, /eventos/23
+    path: "eventos/:id", 
     loadComponent: () => import("./components/evento-details/evento-details.component").then((m) => m.EventoDetailsComponent),
   },
-  // --- ROTA PARA A TELA DE COMPRA (NOVA) ---
+
   {
-    path: "comprar/:id", // Ex: /comprar/123 - ID do evento para a tela de compra
+    path: "comprar/:id", 
     loadComponent: () => import("./components/comprar-ingresso-dialog/comprar-ingresso-dialog.component").then((m) => m.ComprarIngressoPageComponent),
   },
-  // --- FIM DA NOVA ROTA DE COMPRA ---
+
   {
     path: "novo-evento",
     loadComponent: () => import("./evento-form/evento-form.component").then((m) => m.EventoFormComponent),
@@ -49,7 +49,7 @@ export const routes: Routes = [
   },
 
   {
-    path: "**", // Esta rota deve ser sempre a última, para lidar com URLs não correspondentes
+    path: "**", 
     redirectTo: "",
   },
 ];

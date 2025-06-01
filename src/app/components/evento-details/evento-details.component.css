@@ -1,28 +1,24 @@
-/* src/app/components/evento-details/evento-details.component.css */
-
-/* --- Container Principal da Página --- */
 .event-details-page-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centraliza o card principal */
-  padding: 40px; /* AUMENTADO O PADDING GERAL DA PÁGINA */
+  align-items: center;
+  padding: 40px;
   min-height: calc(100vh - var(--toolbar-height, 64px));
   box-sizing: border-box;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #fff;
 }
 
-/* --- Botão Voltar --- */
 .back-button {
   align-self: flex-start;
-  margin-bottom: 30px; /* AUMENTADO A MARGEM INFERIOR */
+  margin-bottom: 30px;
   background-color: rgba(255, 255, 255, 0.15);
   color: white;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, transform 0.2s ease;
-  font-size: 1rem; /* Tamanho de fonte consistente */
-  padding: 10px 15px; /* Padding para o botão */
+  font-size: 1rem;
+  padding: 10px 15px;
 }
 
 .back-button:hover {
@@ -31,13 +27,12 @@
 }
 
 .back-button mat-icon {
-  margin-right: 8px; /* Mais espaço para o ícone */
+  margin-right: 8px;
 }
 
-/* --- Card Principal de Detalhes do Evento --- */
 .event-detail-card {
   width: 100%;
-  max-width: 1200px; /* MUITO MAIS LARGO: de 1000px para 1200px */
+  max-width: 1200px;
   background: white;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
@@ -47,20 +42,20 @@
 }
 
 .card-header-main {
-  padding: 40px; /* AUMENTADO O PADDING DO CABEÇALHO */
+  padding: 40px;
   background: linear-gradient(135deg, #a77be6 0%, #8b5fdf 100%);
   color: white;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .event-title-main {
-  font-size: 2.5rem; /* AUMENTADO O TAMANHO DO TÍTULO */
+  font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 10px;
 }
 
 .event-location-main {
-  font-size: 1.2rem; /* AUMENTADO O TAMANHO DA FONTE */
+  font-size: 1.2rem;
   opacity: 0.9;
   display: flex;
   align-items: center;
@@ -68,57 +63,52 @@
 }
 
 .event-location-main mat-icon {
-  font-size: 1.5rem; /* AUMENTADO O TAMANHO DO ÍCONE */
+  font-size: 1.5rem;
 }
 
-/* --- Conteúdo Principal do Card --- */
 .card-content-detail {
-  padding: 40px; /* AUMENTADO O PADDING DO CONTEÚDO */
+  padding: 40px;
   display: flex;
   flex-direction: column;
-  gap: 40px; /* AUMENTADO O ESPAÇAMENTO ENTRE AS SEÇÕES */
+  gap: 40px;
   color: #333;
 }
 
-/* --- Seção de Descrição --- */
 .description-section h3 {
-  font-size: 1.6rem; /* AUMENTADO O TAMANHO DO TÍTULO DA DESCRIÇÃO */
+  font-size: 1.6rem;
   font-weight: 600;
   color: #1a1a1a;
   margin-bottom: 15px;
 }
 
 .event-description-text {
-  font-size: 1.1rem; /* AUMENTADO O TAMANHO DO TEXTO DA DESCRIÇÃO */
+  font-size: 1.1rem;
   color: #444;
-  line-height: 1.7; /* Aumentei a altura da linha para melhor leitura */
+  line-height: 1.7;
 }
 
-/* --- Divisor de Seções --- */
 .section-divider {
   border-top-color: #eee;
 }
 
-/* --- Grid de Informações Detalhadas --- */
 .info-grid-details {
   display: grid;
-  /* AUMENTADO: minmax(250px, 1fr) para 300px e adicionado uma nova query para 4 colunas */
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px; /* AUMENTADO O GAP NO GRID */
+  gap: 30px;
 }
 
 .info-item-detail {
   display: flex;
   align-items: center;
-  gap: 20px; /* AUMENTADO O GAP */
+  gap: 20px;
   background-color: #f8f8f8;
   border-radius: 8px;
-  padding: 20px; /* AUMENTADO O PADDING */
+  padding: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .info-item-detail .info-icon {
-  font-size: 2.8rem; /* ÍCONES MAIORES */
+  font-size: 2.8rem;
   width: 2.8rem;
   height: 2.8rem;
   color: #764ba2;
@@ -126,39 +116,36 @@
 }
 
 .info-item-detail strong {
-  font-size: 1.05rem; /* LIGEIRAMENTE MAIOR */
+  font-size: 1.05rem;
   color: #1a1a1a;
-  margin-bottom: 8px; /* MAIS ESPAÇO */
+  margin-bottom: 8px;
   display: block;
 }
 
 .info-item-detail p {
-  font-size: 1rem; /* LIGEIRAMENTE MAIOR */
+  font-size: 1rem;
   color: #555;
   margin: 0;
 }
 
-/* --- Seção de Chips de Status --- */
 .status-chips-section {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 15px; /* AUMENTADO O ESPAÇAMENTO ENTRE OS CHIPS */
+  gap: 15px;
 }
 
-/* --- Ações do Card (Botão Comprar) --- */
 .card-actions-bottom {
-  padding: 25px 40px; /* AUMENTADO O PADDING */
+  padding: 25px 40px;
   justify-content: flex-end;
   border-top: 1px solid #eee;
   background-color: #fcfcfc;
 }
 
 .card-actions-bottom button mat-icon {
-  margin-right: 10px; /* Mais espaço para o ícone no botão */
+  margin-right: 10px;
 }
 
-/* --- Indicador de Carregamento para ng-template --- */
 .loading-full-page-indicator {
   display: flex;
   flex-direction: column;
@@ -174,24 +161,23 @@
   --mdc-circular-progress-active-indicator-color: white;
 }
 
-/* --- Responsividade --- */
-@media (min-width: 1400px) { /* NOVA: Para telas MUITO largas (ex: 1400px e acima) */
+@media (min-width: 1400px) {
   .info-grid-details {
-    grid-template-columns: repeat(4, 1fr); /* TENTA 4 COLUNAS */
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
-@media (max-width: 1024px) { /* Ajustes para telas médias (ex: laptops pequenos, tablets na horizontal) */
+@media (max-width: 1024px) {
   .event-details-page-wrapper {
-    padding: 30px 20px; /* Reduz padding lateral */
+    padding: 30px 20px;
   }
   .event-detail-card {
-    max-width: 900px; /* Ajusta a largura máxima */
+    max-width: 900px;
   }
   .card-header-main,
   .card-content-detail,
   .card-actions-bottom {
-    padding: 30px; /* Reduz padding interno para seções */
+    padding: 30px;
   }
   .event-title-main {
     font-size: 2.2rem;
@@ -206,7 +192,7 @@
     font-size: 1rem;
   }
   .info-grid-details {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adaptação do grid */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
   }
   .info-item-detail .info-icon {
@@ -222,12 +208,12 @@
   }
 }
 
-@media (max-width: 768px) { /* Ajustes para tablets na vertical e celulares grandes */
+@media (max-width: 768px) {
   .event-details-page-wrapper {
     padding: 20px 15px;
   }
   .event-detail-card {
-    max-width: 100%; /* Ocupa toda a largura disponível */
+    max-width: 100%;
   }
   .card-header-main,
   .card-content-detail,
@@ -241,12 +227,12 @@
     font-size: 1rem;
   }
   .info-grid-details {
-    grid-template-columns: 1fr; /* Uma coluna em telas menores */
+    grid-template-columns: 1fr;
     gap: 15px;
   }
 }
 
-@media (max-width: 480px) { /* Ajustes para celulares pequenos */
+@media (max-width: 480px) {
   .event-details-page-wrapper {
     padding: 10px;
   }

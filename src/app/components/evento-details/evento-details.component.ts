@@ -1,4 +1,4 @@
-// src/app/components/evento-details/evento-details.component.ts (AJUSTADO)
+
 
 import { Component, type OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
@@ -7,8 +7,6 @@ import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatChipsModule } from "@angular/material/chips";
-// import { MatDialog } from "@angular/material/dialog"; // REMOVIDO: Não precisamos mais do MatDialog aqui
-// import { ComprarIngressoDialogComponent } from "../comprar-ingresso-dialog/comprar-ingresso-dialog.component"; // REMOVIDO: Não precisamos mais do ComprarIngressoDialogComponent
 import { MatDividerModule } from '@angular/material/divider';
 import { EventosService } from "../../services/eventos.service";
 import { NotificationService } from "../../services/notification.service";
@@ -22,24 +20,24 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   standalone: true,
   imports: [CommonModule, RouterLink, MatCardModule, MatButtonModule, MatIconModule, MatChipsModule, MatDividerModule, MatProgressSpinnerModule],
   templateUrl: './evento-details.component.html',
-  styleUrls: ['./evento-details.component.css'] // Note o 'Urls' no plural e o array
+  styleUrls: ['./evento-details.component.css'] 
 })
 export class EventoDetailsComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private eventosService = inject(EventosService);
   private notificationService = inject(NotificationService);
-  // private dialog = inject(MatDialog); // REMOVIDO: Não precisamos mais do MatDialog aqui
+ 
 
   evento: Evento | null = null;
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get("id");
     if (id) {
-      this.carregarEvento(+id); // O '+' converte string para number
+      this.carregarEvento(+id); 
     } else {
       this.notificationService.warning("ID do evento não fornecido.");
-      this.router.navigate(["/eventos"]); // Volta para a lista de eventos
+      this.router.navigate(["/eventos"]); 
     }
   }
 
@@ -61,10 +59,10 @@ export class EventoDetailsComponent implements OnInit {
     });
   }
 
-  // MÉTODO COMPRAR INGRESSO ATUALIZADO PARA NAVEGAR PARA A NOVA PAGE
+  
   comprarIngresso(): void {
-    if (this.evento && this.evento.id) { // Garante que o evento e seu ID existem
-      this.router.navigate(['/comprar', this.evento.id]); // NAVEGA para a nova rota de compra
+    if (this.evento && this.evento.id) { 
+      this.router.navigate(['/comprar', this.evento.id]); 
     } else {
       this.notificationService.error("Não foi possível iniciar a compra: evento inválido.");
     }

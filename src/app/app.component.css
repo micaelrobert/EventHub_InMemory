@@ -1,22 +1,18 @@
-/* app.component.css - Versão Consolidada e Ajustada */
-
-/* Container Principal da Aplicação */
 .app-container {
-  min-height: 100vh; /* Garante que o container ocupe a altura total da viewport */
+  min-height: 100vh;
   display: flex;
-  flex-direction: column; /* Organiza o conteúdo verticalmente: toolbar, main-content, footer (se houver) */
+  flex-direction: column;
 }
 
-/* Toolbar (Barra de Navegação Superior) */
 .toolbar {
-  background: rgba(255, 255, 255, 0.8); /* Fundo semi-transparente */
-  backdrop-filter: blur(10px); /* Efeito de blur no fundo */
-  border-bottom: 3px solid #764ba2; /* Borda inferior com gradiente primário */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  border-radius: 0 0 16px 16px; /* Bordas arredondadas na parte inferior */
-  transition: all 0.3s ease; /* Transição suave para quaisquer mudanças */
-  z-index: 1000; /* Garante que a toolbar fique acima de outros elementos */
-  position: relative; /* Necessário para z-index */
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 3px solid #764ba2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 16px 16px;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  position: relative;
 }
 
 .toolbar-content {
@@ -24,10 +20,10 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 1200px; /* Limita a largura máxima do conteúdo da toolbar */
-  margin: 0 auto; /* Centraliza a toolbar-content */
-  padding: 0 1rem; /* Padding horizontal */
-  height: 64px; /* Altura padrão de toolbars do Material Design */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  height: 64px;
 }
 
 .logo {
@@ -36,94 +32,85 @@
   gap: 0.5rem;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #333; /* Cor do texto do logo */
-  text-decoration: none; /* Garante que não tenha sublinhado se for um link */
+  color: #333;
+  text-decoration: none;
 }
 
-/* Links de Navegação (Menu) */
 .nav-links {
   display: flex;
-  align-items: center; /* Alinha verticalmente links e botões */
-  gap: 0.5rem; /* Espaçamento entre os itens de navegação */
+  align-items: center;
+  gap: 0.5rem;
 }
 
-/* Estilo base para links e botões de ícone na navegação */
 .nav-links a,
 .nav-links button.mat-icon-button {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem; /* Espaçamento entre ícone e texto */
-  color: #333; /* Cor do texto/ícone padrão */
+  gap: 0.25rem;
+  color: #333;
   font-weight: 500;
   text-decoration: none;
-  padding: 0.5rem 0.75rem; /* Padding interno */
-  border-radius: 4px; /* Bordas arredondadas */
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
   transition: background-color 0.2s ease-in-out, transform 0.2s ease;
   border: none;
   background: transparent;
-  cursor: pointer; /* Garante cursor de ponteiro para botões */
+  cursor: pointer;
 }
 
 .nav-links a:hover,
 .nav-links button.mat-icon-button:hover {
-  background: rgba(118, 75, 162, 0.2); /* Fundo suave no hover */
-  color: #764ba2; /* Cor do texto no hover */
-  transform: translateY(-2px); /* Pequeno efeito de elevação */
+  background: rgba(118, 75, 162, 0.2);
+  color: #764ba2;
+  transform: translateY(-2px);
 }
 
 .nav-links a.active {
-  background: #e0e0e0; /* Fundo para link ativo */
-  color: #764ba2; /* Cor de texto para link ativo */
+  background: #e0e0e0;
+  color: #764ba2;
 }
 
-/* Ícones dentro dos links de navegação */
 .nav-links mat-icon {
-  color: inherit; /* Herda a cor do texto do link/botão pai */
+  color: inherit;
 }
 
-/* Espaçador para empurrar itens para a direita */
 .nav-spacer {
   flex-grow: 1;
 }
 
-/* Informações do Usuário na Toolbar */
 .user-info {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.3rem 0.6rem;
   border-radius: 16px;
-  background-color: rgba(0, 0, 0, 0.05); /* Fundo suave para o box de info do usuário */
+  background-color: rgba(0, 0, 0, 0.05);
   font-size: 1rem;
 }
 
 .user-icon {
   font-size: 1.6rem;
-  color: #333; /* Cor do ícone de usuário */
+  color: #333;
 }
 
 .user-name {
   font-weight: 500;
-  color: #333; /* Cor do nome do usuário */
-  white-space: nowrap; /* Evita quebra de linha no nome */
+  color: #333;
+  white-space: nowrap;
 }
 
-/* Main Content (Área principal abaixo da toolbar) */
 .main-content {
-  flex-grow: 1; /* Permite que o conteúdo principal ocupe o espaço restante */
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Fundo de gradiente */
+  flex-grow: 1;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
-  align-items: flex-start; /* Alinha o conteúdo ao topo, não ao centro (melhor para rolagem) */
-  justify-content: center; /* Centraliza horizontalmente */
+  align-items: flex-start;
+  justify-content: center;
   padding: 2rem;
-  color: #fff; /* Cor de texto para o conteúdo principal */
+  color: #fff;
   font-size: 1.2rem;
-  overflow-y: auto; /* Permite rolagem no conteúdo principal se for muito grande */
+  overflow-y: auto;
 }
 
-/* Estilos de Card (se aplicados a outros componentes) */
-/* OBS: Esses estilos são globais no app.component.css. Se você tem .card em outros componentes,
-   eles podem se sobrepor. Use classes mais específicas ou mova para um styles.css. */
 .card {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(20px);
@@ -157,25 +144,22 @@
   color: #333;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
   .toolbar-content {
     padding: 0 0.5rem;
   }
 
   .nav-links {
-    gap: 0.1rem; /* Menor espaçamento entre ícones */
+    gap: 0.1rem;
   }
 
-  .nav-links a span, /* Esconde o texto dos links (originalmente .link-text-label) */
-  .user-name { /* Esconde o nome do usuário */
+  .nav-links a span,
+  .user-name {
     display: none;
   }
 
   .nav-links a,
   .nav-links button.mat-icon-button {
-    padding: 0.5rem; /* Padding menor para acomodar só o ícone */
+    padding: 0.5rem;
   }
-
-  /* .card { max-width: 100%; } -- Essa regra estava repetida, o styles.css global já tem um max-width */
 }

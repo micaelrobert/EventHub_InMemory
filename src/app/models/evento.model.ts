@@ -13,7 +13,7 @@ export interface Evento {
   imagemUrl: string;
 }
 export interface Evento {
-  // ... other properties
+  
   status: 'aberto' | 'encerrado' | 'esgotado' | string;
 }
 
@@ -26,8 +26,8 @@ export interface CriarEvento {
   capacidadeMaxima: number;
 }
 
-// A interface AtualizarEvento pode herdar de CriarEvento para evitar repetição
+
 export interface AtualizarEvento extends CriarEvento {
-  id: number; // Precisamos do ID para saber qual evento atualizar
+  id: number; 
   ativo: boolean;
 }

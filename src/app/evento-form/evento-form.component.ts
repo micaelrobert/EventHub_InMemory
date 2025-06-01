@@ -70,9 +70,8 @@ export class EventoFormComponent implements OnInit {
   }
 
   carregarDadosDoEvento(id: number): void {
-    // Supondo que seu serviço tenha um método getEventoById que retorna ApiResponse<Evento>
-    this.eventoService.getEvento(id).subscribe({ // << Corrigido para getEvento
-      next: (response: ApiResponse<Evento>) => { // << Adicionada tipagem aqui para clareza
+    this.eventoService.getEvento(id).subscribe({ 
+      next: (response: ApiResponse<Evento>) => { 
         if (response.sucesso && response.dados) {
           const evento: Evento = response.dados;
           this.form.patchValue({
@@ -118,7 +117,7 @@ export class EventoFormComponent implements OnInit {
       minutos
     );
 
-    // --- ADICIONADOS OS CONSOLE.LOGS PARA DEBUG ---
+    
     console.log("--- DEBUG SUBMIT (EDIÇÃO OU CRIAÇÃO) ---");
     console.log("Valor dataEvento do form (original):", formValues.dataEvento);
     console.log("Valor horaEvento do form:", formValues.horaEvento);
@@ -126,7 +125,7 @@ export class EventoFormComponent implements OnInit {
     console.log("Horas parseadas:", horas, "Minutos parseados:", minutos);
     console.log("DataEventoCompleta a ser enviada (objeto Date):", dataEventoCompleta);
     console.log("DataEventoCompleta a ser enviada (ISO String):", dataEventoCompleta.toISOString());
-    // --- FIM DOS CONSOLE.LOGS ---
+    
 
     if (this.isEditMode && this.eventId !== null) {
       const eventoAtualizado: AtualizarEvento = {
@@ -140,9 +139,9 @@ export class EventoFormComponent implements OnInit {
         ativo: formValues.ativo
       };
 
-      // --- CONSOLE.LOG DO PAYLOAD DE ATUALIZAÇÃO ---
+      
       console.log("Payload enviado para atualizarEvento:", eventoAtualizado);
-      // --- FIM DO CONSOLE.LOG ---
+      
 
       this.eventoService.atualizarEvento(this.eventId, eventoAtualizado).subscribe({
         next: () => {
@@ -163,9 +162,9 @@ export class EventoFormComponent implements OnInit {
         capacidadeMaxima: formValues.capacidadeMaxima
       };
 
-      // --- CONSOLE.LOG DO PAYLOAD DE CRIAÇÃO ---
+      
       console.log("Payload enviado para criarEvento:", novoEvento);
-      // --- FIM DO CONSOLE.LOG ---
+      
 
       this.eventoService.criarEvento(novoEvento).subscribe({
         next: () => {

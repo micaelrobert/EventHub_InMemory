@@ -5,8 +5,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
-import { authInterceptor } from './interceptors/auth.interceptor';     // <<< IMPORTE O AUTH INTERCEPTOR
-import { errorInterceptor } from './interceptors/error.interceptor';  // <<< IMPORTE O ERROR INTERCEPTOR
+import { authInterceptor } from './interceptors/auth.interceptor';     
+import { errorInterceptor } from './interceptors/error.interceptor';  
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,8 +15,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withFetch(),
       withInterceptors([
-        authInterceptor,  // <<< AUTH INTERCEPTOR PRIMEIRO
-        errorInterceptor  // <<< ERROR INTERCEPTOR DEPOIS
+        authInterceptor,  
+        errorInterceptor  
       ])
     ),
     provideClientHydration(withEventReplay())

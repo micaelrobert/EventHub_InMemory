@@ -86,14 +86,14 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Responsividade - 2 colunas em telas médias */
+
 @media (max-width: 1200px) {
   .event-card-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Responsividade - 1 coluna em telas pequenas */
+
 @media (max-width: 768px) {
   .event-card-grid {
     grid-template-columns: 1fr;
@@ -121,7 +121,7 @@
   }
 }
 
-/* Opcional: Limitar largura máxima em telas muito grandes */
+
 @media (min-width: 1600px) {
   .event-card-grid {
     max-width: 1600px;

@@ -1,5 +1,3 @@
-// src/app/ingresso-list/ingresso-list.component.ts (AJUSTADO)
-
 import { Component, OnInit, inject } from "@angular/core";
 import { CommonModule, DatePipe } from "@angular/common";
 import { MatTableModule } from "@angular/material/table";
@@ -9,20 +7,18 @@ import { MatCardModule } from "@angular/material/card";
 import { MatChipsModule } from "@angular/material/chips";
 import { RouterModule } from "@angular/router";
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Provavelmente precisa para spinner
-
-// Módulos para filtro/formulário
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
-// Serviços e modelos
-import { IngressosService } from "../services/ingressos.service"; // Ajuste o caminho
-import { NotificationService } from "../services/notification.service"; // Ajuste o caminho
-import { AuthService } from '../services/auth.service'; // Ajuste o caminho
-import { ApiResponse } from "../models/response.model"; // Ajuste o caminho
-import { Ingresso, StatusIngresso } from "../models/ingresso.model"; // Importar Ingresso e StatusIngresso
+
+import { IngressosService } from "../services/ingressos.service"; 
+import { NotificationService } from "../services/notification.service"; 
+import { AuthService } from '../services/auth.service'; 
+import { ApiResponse } from "../models/response.model"; 
+import { Ingresso, StatusIngresso } from "../models/ingresso.model"; 
 import { Observable } from 'rxjs';
 
 @Component({
@@ -37,10 +33,10 @@ import { Observable } from 'rxjs';
     MatCardModule,
     MatChipsModule,
     MatTooltipModule,
-    MatProgressSpinnerModule, // Adicionado para spinner (se usado no HTML)
+    MatProgressSpinnerModule,
     DatePipe,
-    FormsModule, // Para usar ngModel nos filtros
-    ReactiveFormsModule, // Para usar FormGroup
+    FormsModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
@@ -51,21 +47,20 @@ import { Observable } from 'rxjs';
 export class IngressoListComponent implements OnInit {
   private ingressosService = inject(IngressosService);
   private notificationService = inject(NotificationService);
-  public authService = inject(AuthService); // AuthService para isAdmin
-  private fb = inject(FormBuilder); // Para o formulário de busca
+  public authService = inject(AuthService);
+  private fb = inject(FormBuilder);
 
   ingressos: Ingresso[] = [];
   ingressosFiltrados: Ingresso[] = [];
   buscando = false;
   filtroForm!: FormGroup;
-  filtroStatus: StatusIngresso | '' = ''; // Para o filtro de status
-  statusOptions: StatusIngresso[] = Object.values(StatusIngresso); // Opções para o select de status
+  filtroStatus: StatusIngresso | '' = '';
+  statusOptions: StatusIngresso[] = Object.values(StatusIngresso);
 
   ngOnInit(): void {
     this.criarFormFiltro();
     this.carregarIngressos();
 
-    // Reaplicar filtro quando os valores do formulário mudarem
     this.filtroForm.valueChanges.subscribe(() => {
       this.aplicarFiltro();
     });
@@ -74,7 +69,7 @@ export class IngressoListComponent implements OnInit {
   private criarFormFiltro(): void {
     this.filtroForm = this.fb.group({
       termoBusca: [''],
-      status: [''], // Campo para o filtro de status
+      status: [''],
     });
   }
 
@@ -83,9 +78,9 @@ export class IngressoListComponent implements OnInit {
     let loadObservable: Observable<ApiResponse<Ingresso[]>>;
 
     if (this.authService.isAdmin()) {
-      loadObservable = this.ingressosService.getIngressos(); // Admin vê todos
+      loadObservable = this.ingressosService.getIngressos();
     } else {
-      loadObservable = this.ingressosService.getMeusIngressos(); // Usuário comum vê só os seus
+      loadObservable = this.ingressosService.getMeusIngressos();
     }
 
     loadObservable.subscribe({
@@ -93,14 +88,14 @@ export class IngressoListComponent implements OnInit {
         this.buscando = false;
         if (response.sucesso && response.dados) {
           this.ingressos = response.dados;
-          this.aplicarFiltro(); // Aplica o filtro inicial
+          this.aplicarFiltro();
           if (this.ingressos.length === 0) {
             this.notificationService.info("Nenhum ingresso encontrado.");
           }
         } else {
           this.notificationService.error(response.mensagem || "Falha ao carregar ingressos.");
           this.ingressos = [];
-          this.aplicarFiltro(); // Garante que a lista filtrada também fique vazia
+          this.aplicarFiltro();
         }
       },
       error: (err) => {
@@ -128,16 +123,15 @@ export class IngressoListComponent implements OnInit {
 filtroCodigo: string = '';
   aplicarFiltro(): void {
     const termoBusca = this.filtroForm.get('termoBusca')?.value?.toLowerCase() || '';
-    this.filtroStatus = this.filtroForm.get('status')?.value || ''; // Atualiza o filtroStatus
+    this.filtroStatus = this.filtroForm.get('status')?.value || '';
 
     this.ingressosFiltrados = this.ingressos.filter(ingresso => {
       const matchTermo =
         ingresso.nomeComprador.toLowerCase().includes(termoBusca) ||
         ingresso.emailComprador.toLowerCase().includes(termoBusca) ||
         ingresso.codigo.toLowerCase().includes(termoBusca) ||
-        (ingresso.evento?.nome?.toLowerCase().includes(termoBusca)); // Busca no nome do evento
+        (ingresso.evento?.nome?.toLowerCase().includes(termoBusca));
 
-      // --- CORREÇÃO AQUI: USANDO getStatusText para filtrar ---
       const ingressoStatusText = this.getStatusText(ingresso);
       const matchStatus = !this.filtroStatus || ingressoStatusText === this.filtroStatus;
 
@@ -145,15 +139,14 @@ filtroCodigo: string = '';
     });
   }
 
-  // --- MÉTODOS PARA OBTER STATUS E COR (COPIADOS DE MEUS INGRESSOS) ---
   getStatusColor(ingresso: Ingresso): string {
     if (ingresso.motivoDevolucao || ingresso.dataDevolucao) {
-      return "warn"; // Cancelado
+      return "warn";
     }
     if (!ingresso.ativo) {
-      return "accent"; // Usado (ou não ativo por outro motivo)
+      return "accent";
     }
-    return "primary"; // Ativo
+    return "primary";
   }
 
   getStatusText(ingresso: Ingresso): string {
@@ -166,7 +159,6 @@ filtroCodigo: string = '';
     return StatusIngresso.Ativo;
   }
 
-  // --- MÉTODOS EXISTENTES MANTIDOS ---
   baixarIngresso(ingresso: Ingresso): void {
     const ingressoId = ingresso.id;
     this.ingressosService.baixarIngressoPdf(ingressoId).subscribe({
@@ -185,16 +177,4 @@ filtroCodigo: string = '';
       }
     });
   }
-
-  // Adicione este método se você quiser poder deletar ingressos da lista (apenas admin)
-  // deletarIngresso(ingresso: Ingresso): void {
-  //   if (!this.authService.isAdmin()) {
-  //     this.notificationService.error("Ação não permitida.");
-  //     return;
-  //   }
-  //   if (confirm(`Tem certeza que deseja deletar o ingresso "${ingresso.codigo}"?`)) {
-  //     // Implemente o serviço de deletar ingresso aqui
-  //     this.notificationService.info("Funcionalidade de deletar ingresso será implementada.");
-  //   }
-  // }
 }
